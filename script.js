@@ -50,11 +50,11 @@ const reciterSelect = document.getElementById('reciter');
 const playAudioBtn = document.getElementById('play-audio');
 const themeToggleBtn = document.querySelector('.theme-toggle i');
 let audio = new Audio();
-let clickSound = new Audio('https://www.soundjay.com/buttons/button-3.mp3'); // رابط صوت تأثير بسيط
+let clickSound = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3'); // صوت هادئ (يمكنك استبداله بصوت ديني)
 
 moodButtons.forEach(button => {
     button.addEventListener('click', () => {
-        clickSound.play(); // تشغيل صوت عند الضغط
+        clickSound.play(); // تشغيل صوت هادئ
         const mood = button.getAttribute('data-mood');
         const verseList = verses[mood];
         const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
@@ -66,7 +66,7 @@ moodButtons.forEach(button => {
 });
 
 playAudioBtn.addEventListener('click', () => {
-    clickSound.play(); // تشغيل صوت عند الضغط
+    clickSound.play(); // تشغيل صوت هادئ
     const reciter = reciterSelect.value;
     // استبدل هذه الروابط بروابط صوتية حقيقية
     const audioUrl = reciter === 'ياسر الدوسري' 
@@ -77,7 +77,7 @@ playAudioBtn.addEventListener('click', () => {
 });
 
 function toggleTheme() {
-    clickSound.play(); // تشغيل صوت عند الضغط
+    clickSound.play(); // تشغيل صوت هادئ
     document.body.classList.toggle('dark');
     themeToggleBtn.classList.toggle('fa-sun');
     themeToggleBtn.classList.toggle('fa-moon');
