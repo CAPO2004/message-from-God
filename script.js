@@ -48,20 +48,25 @@ const resultDiv = document.getElementById('result');
 const verseP = document.getElementById('verse');
 const reciterSelect = document.getElementById('reciter');
 const playAudioBtn = document.getElementById('play-audio');
+const themeToggleBtn = document.querySelector('.theme-toggle i');
 let audio = new Audio();
+let clickSound = new Audio('https://www.soundjay.com/buttons/button-3.mp3'); // رابط صوت تأثير بسيط
 
 moodButtons.forEach(button => {
     button.addEventListener('click', () => {
+        clickSound.play(); // تشغيل صوت عند الضغط
         const mood = button.getAttribute('data-mood');
         const verseList = verses[mood];
         const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
         
         verseP.textContent = randomVerse;
         resultDiv.classList.remove('hidden');
+        resultDiv.style.opacity = 1;
     });
 });
 
 playAudioBtn.addEventListener('click', () => {
+    clickSound.play(); // تشغيل صوت عند الضغط
     const reciter = reciterSelect.value;
     // استبدل هذه الروابط بروابط صوتية حقيقية
     const audioUrl = reciter === 'ياسر الدوسري' 
@@ -72,5 +77,8 @@ playAudioBtn.addEventListener('click', () => {
 });
 
 function toggleTheme() {
+    clickSound.play(); // تشغيل صوت عند الضغط
     document.body.classList.toggle('dark');
+    themeToggleBtn.classList.toggle('fa-sun');
+    themeToggleBtn.classList.toggle('fa-moon');
 }
