@@ -43,6 +43,72 @@ const verses = {
     ]
 };
 
+// تعريف الروابط الصوتية بناءً على السورة والآية
+const audioUrls = {
+    "ياسر الدوسري": {
+        "آل عمران: 159": "https://www.mp3quran.net/eng/play/3/yasser_al_dosari/003159.mp3",
+        "النجم: 43": "https://www.mp3quran.net/eng/play/53/yasser_al_dosari/053043.mp3",
+        "الأعراف: 156": "https://www.mp3quran.net/eng/play/7/yasser_al_dosari/007156.mp3",
+        "يونس: 58": "https://www.mp3quran.net/eng/play/10/yasser_al_dosari/010058.mp3",
+        "الحجر: 87": "https://www.mp3quran.net/eng/play/15/yasser_al_dosari/015087.mp3",
+        "الرعد: 28": "https://www.mp3quran.net/eng/play/13/yasser_al_dosari/013028.mp3",
+        "الشرح: 6": "https://www.mp3quran.net/eng/play/94/yasser_al_dosari/094006.mp3",
+        "الطلاق: 2": "https://www.mp3quran.net/eng/play/65/yasser_al_dosari/065002.mp3",
+        "الشعراء: 217": "https://www.mp3quran.net/eng/play/26/yasser_al_dosari/026217.mp3",
+        "التوبة: 51": "https://www.mp3quran.net/eng/play/9/yasser_al_dosari/009051.mp3",
+        "الحديد: 4": "https://www.mp3quran.net/eng/play/57/yasser_al_dosari/057004.mp3",
+        "البقرة: 153": "https://www.mp3quran.net/eng/play/2/yasser_al_dosari/002153.mp3",
+        "التوبة: 40": "https://www.mp3quran.net/eng/play/9/yasser_al_dosari/009040.mp3",
+        "الطور: 48": "https://www.mp3quran.net/eng/play/52/yasser_al_dosari/052048.mp3",
+        "الزمر: 36": "https://www.mp3quran.net/eng/play/39/yasser_al_dosari/039036.mp3",
+        "إبراهيم: 7": "https://www.mp3quran.net/eng/play/14/yasser_al_dosari/014007.mp3",
+        "البقرة: 172": "https://www.mp3quran.net/eng/play/2/yasser_al_dosari/002172.mp3",
+        "المائدة: 7": "https://www.mp3quran.net/eng/play/5/yasser_al_dosari/005007.mp3",
+        "البقرة: 152": "https://www.mp3quran.net/eng/play/2/yasser_al_dosari/002152.mp3",
+        "آل عمران: 145": "https://www.mp3quran.net/eng/play/3/yasser_al_dosari/003145.mp3",
+        "آل عمران: 139": "https://www.mp3quran.net/eng/play/3/yasser_al_dosari/003139.mp3",
+        "يوسف: 87": "https://www.mp3quran.net/eng/play/12/yasser_al_dosari/012087.mp3",
+        "الأعراف: 156": "https://www.mp3quran.net/eng/play/7/yasser_al_dosari/007156.mp3",
+        "البقرة: 155": "https://www.mp3quran.net/eng/play/2/yasser_al_dosari/002155.mp3",
+        "آل عمران: 134": "https://www.mp3quran.net/eng/play/3/yasser_al_dosari/003134.mp3",
+        "الشورى: 37": "https://www.mp3quran.net/eng/play/42/yasser_al_dosari/042037.mp3",
+        "الأعراف: 199": "https://www.mp3quran.net/eng/play/7/yasser_al_dosari/007199.mp3",
+        "فصلت: 34": "https://www.mp3quran.net/eng/play/41/yasser_al_dosari/041034.mp3",
+        "الشورى: 40": "https://www.mp3quran.net/eng/play/42/yasser_al_dosari/042040.mp3"
+    },
+    "ناصر القطامي": {
+        "آل عمران: 159": "https://www.mp3quran.net/eng/play/3/nasser_al_qatami/003159.mp3",
+        "النجم: 43": "https://www.mp3quran.net/eng/play/53/nasser_al_qatami/053043.mp3",
+        "الأعراف: 156": "https://www.mp3quran.net/eng/play/7/nasser_al_qatami/007156.mp3",
+        "يونس: 58": "https://www.mp3quran.net/eng/play/10/nasser_al_qatami/010058.mp3",
+        "الحجر: 87": "https://www.mp3quran.net/eng/play/15/nasser_al_qatami/015087.mp3",
+        "الرعد: 28": "https://www.mp3quran.net/eng/play/13/nasser_al_qatami/013028.mp3",
+        "الشرح: 6": "https://www.mp3quran.net/eng/play/94/nasser_al_qatami/094006.mp3",
+        "الطلاق: 2": "https://www.mp3quran.net/eng/play/65/nasser_al_qatami/065002.mp3",
+        "الشعراء: 217": "https://www.mp3quran.net/eng/play/26/nasser_al_qatami/026217.mp3",
+        "التوبة: 51": "https://www.mp3quran.net/eng/play/9/nasser_al_qatami/009051.mp3",
+        "الحديد: 4": "https://www.mp3quran.net/eng/play/57/nasser_al_qatami/057004.mp3",
+        "البقرة: 153": "https://www.mp3quran.net/eng/play/2/nasser_al_qatami/002153.mp3",
+        "التوبة: 40": "https://www.mp3quran.net/eng/play/9/nasser_al_qatami/009040.mp3",
+        "الطور: 48": "https://www.mp3quran.net/eng/play/52/nasser_al_qatami/052048.mp3",
+        "الزمر: 36": "https://www.mp3quran.net/eng/play/39/nasser_al_qatami/039036.mp3",
+        "إبراهيم: 7": "https://www.mp3quran.net/eng/play/14/nasser_al_qatami/014007.mp3",
+        "البقرة: 172": "https://www.mp3quran.net/eng/play/2/nasser_al_qatami/002172.mp3",
+        "المائدة: 7": "https://www.mp3quran.net/eng/play/5/nasser_al_qatami/005007.mp3",
+        "البقرة: 152": "https://www.mp3quran.net/eng/play/2/nasser_al_qatami/002152.mp3",
+        "آل عمران: 145": "https://www.mp3quran.net/eng/play/3/nasser_al_qatami/003145.mp3",
+        "آل عمران: 139": "https://www.mp3quran.net/eng/play/3/nasser_al_qatami/003139.mp3",
+        "يوسف: 87": "https://www.mp3quran.net/eng/play/12/nasser_al_qatami/012087.mp3",
+        "الأعراف: 156": "https://www.mp3quran.net/eng/play/7/nasser_al_qatami/007156.mp3",
+        "البقرة: 155": "https://www.mp3quran.net/eng/play/2/nasser_al_qatami/002155.mp3",
+        "آل عمران: 134": "https://www.mp3quran.net/eng/play/3/nasser_al_qatami/003134.mp3",
+        "الشورى: 37": "https://www.mp3quran.net/eng/play/42/nasser_al_qatami/042037.mp3",
+        "الأعراف: 199": "https://www.mp3quran.net/eng/play/7/nasser_al_qatami/007199.mp3",
+        "فصلت: 34": "https://www.mp3quran.net/eng/play/41/nasser_al_qatami/041034.mp3",
+        "الشورى: 40": "https://www.mp3quran.net/eng/play/42/nasser_al_qatami/042040.mp3"
+    }
+};
+
 const moodButtons = document.querySelectorAll('.mood-btn');
 const resultDiv = document.getElementById('result');
 const verseP = document.getElementById('verse');
@@ -50,6 +116,7 @@ const reciterSelect = document.getElementById('reciter');
 const playAudioBtn = document.getElementById('play-audio');
 const themeToggleBtn = document.querySelector('.theme-toggle i');
 let audio = new Audio();
+let currentVerse = "";
 
 moodButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -58,6 +125,7 @@ moodButtons.forEach(button => {
         const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
         
         verseP.textContent = randomVerse;
+        currentVerse = randomVerse;
         resultDiv.classList.remove('hidden');
         resultDiv.style.opacity = 1;
     });
@@ -65,12 +133,15 @@ moodButtons.forEach(button => {
 
 playAudioBtn.addEventListener('click', () => {
     const reciter = reciterSelect.value;
-    // استبدل هذه الروابط بروابط صوتية حقيقية
-    const audioUrl = reciter === 'ياسر الدوسري' 
-        ? 'https://example.com/yasser_audio.mp3' 
-        : 'https://example.com/nasser_audio.mp3';
-    audio.src = audioUrl;
-    audio.play().catch(error => alert('يرجى إضافة رابط صوتي صالح!'));
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, ""); // استخراج المرجع مثل "آل عمران: 159"
+    const audioUrl = audioUrls[reciter][verseKey];
+    
+    if (audioUrl) {
+        audio.src = audioUrl;
+        audio.play().catch(error => alert('خطأ في تشغيل الصوت، تأكد من الرابط أو الاتصال بالإنترنت!'));
+    } else {
+        alert('لا يوجد رابط صوتي متاح لهذه الآية، يرجى إضافة رابط صالح!');
+    }
 });
 
 function toggleTheme() {
