@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>برطمان السعادة</title>
+    <title>رسالة من الله</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>اختر حالتك</h1>
+        <h1>رسالة من الله</h1>
+        <h2>اختر حالتك</h2>
         <div class="mood-buttons">
             <button class="mood-btn" data-mood="السعادة">السعادة</button>
             <button class="mood-btn" data-mood="القلق">القلق</button>
@@ -19,7 +21,7 @@
         </div>
 
         <div id="result" class="hidden">
-            <h2>اختر القارئ:</h2>
+            <h3>اختر القارئ:</h3>
             <select id="reciter">
                 <option value="ياسر الدوسري">ياسر الدوسري</option>
                 <option value="ناصر القطامي">ناصر القطامي</option>
@@ -27,17 +29,20 @@
             <p id="verse"></p>
             <button id="play-audio">تشغيل الصوت</button>
         </div>
-
-        <footer>
-            <p>جميع الحقوق محفوظة لأحمد عادل © 2025</p>
-            <div class="social-links">
-                <a href="https://wa.me/2001090204281?text=" target="_blank">واتساب</a>
-                <a href="https://www.facebook.com/ahmed.adel200423?mibextid=ZbWKwL" target="_blank">فيسبوك</a>
-                <a href="https://www.instagram.com/capo.2004?igsh=MTBvZm9ldXNoM3p6bA==" target="_blank">إنستجرام</a>
-            </div>
-        </footer>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">تبديل الوضع</button>
+
+    <hr class="divider">
+
+    <footer>
+        <p>جميع الحقوق محفوظة لأحمد عادل © 2025</p>
+        <div class="social-links">
+            <a href="https://wa.me/2001090204281?text=" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/ahmed.adel200423?mibextid=ZbWKwL" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/capo.2004?igsh=MTBvZm9ldXNoM3p6bA==" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
     <script src="script.js"></script>
 </body>
 </html>
