@@ -129,7 +129,7 @@ const playAudioBtn = document.getElementById('play-audio');
 const stopAudioBtn = document.getElementById('stop-audio');
 const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
-const audioProgress = document.getElementById('audio-progress');
+const progressBar = document.getElementById('progress-bar');
 const currentTimeSpan = document.getElementById('current-time');
 const durationSpan = document.getElementById('duration');
 const rewindAudioBtn = document.getElementById('rewind-audio');
@@ -138,6 +138,7 @@ const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
+let isMuted = false;
 
 // دالة تحويل الثواني إلى تنسيق زمني (mm:ss)
 function formatTime(seconds) {
@@ -146,11 +147,12 @@ function formatTime(seconds) {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// دالة لتشغيل الصوت وتحديث الزمن
+// دالة لتشغيل الصوت
 function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
         audio.src = audioUrl;
+        audio.muted = isMuted; // الحفاظ على حالة الصوت (مكتوم أو لا)
         audio.play().then(() => {
             durationSpan.textContent = formatTime(audio.duration);
             updateProgress();
@@ -162,9 +164,9 @@ function playAudio(reciter, verseKey) {
 
 // دالة لتحديث شريط التقدم والزمن
 function updateProgress() {
-    if (!audio.paused) {
+    if (!audio.paused && audio.duration) {
         const progress = (audio.currentTime / audio.duration) * 100;
-        audioProgress.style.width = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -205,11 +207,12 @@ randomVerseBtn.addEventListener('click', () => {
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت يدويًا (عند تغيير القارئ)
+// تشغيل الصوت يدويًا (مع تحديث القارئ)
 playAudioBtn.addEventListener('click', () => {
     if (audio.paused) {
-        audio.play();
-        updateProgress();
+        const reciter = reciterSelect.value;
+        const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+        playAudio(reciter, verseKey);
     }
 });
 
@@ -217,15 +220,23 @@ playAudioBtn.addEventListener('click', () => {
 stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
-    audioProgress.style.width = "0";
+    progressBar.style.width = "0";
     currentTimeSpan.textContent = "0:00";
 });
 
 // إعادة الصوت إلى البداية
 rewindAudioBtn.addEventListener('click', () => {
     audio.currentTime = 0;
-    audioProgress.style.width = "0";
+    progressBar.style.width = "0";
     currentTimeSpan.textContent = "0:00";
+});
+
+// كتم/إلغاء كتم الصوت
+volumeControlBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    audio.muted = isMuted;
+    volumeControlBtn.querySelector('i').classList.toggle('fa-volume-up');
+    volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
 });
 
 // مشاركة الآية مع قائمة منصات التواصل
@@ -233,16 +244,23 @@ shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
     const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [رابط الموقع]`;
     navigator.clipboard.writeText(shareText).then(() => {
+        // إزالة أي قائمة سابقة
+        const existingMenu = document.getElementById('social-menu');
+        if (existingMenu) existingMenu.remove();
+
         // إظهار قائمة منصات التواصل
         const socialOptions = `
-            <div id="social-menu" style="position: absolute; top: -100px; left: 50%; transform: translateX(-50%); background: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.2); padding: 10px; z-index: 1000;">
-                <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; margin: 5px 0; color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="display: block; margin: 5px 0; color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
-                <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; margin: 5px 0; color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
+            <div id="social-menu">
+                <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
-        document.body.insertAdjacentHTML('beforeend', socialOptions);
-        setTimeout(() => document.getElementById('social-menu').remove(), 5000); // إزالة القائمة بعد 5 ثواني
+        resultDiv.insertAdjacentHTML('beforeend', socialOptions);
+        setTimeout(() => {
+            const menu = document.getElementById('social-menu');
+            if (menu) menu.remove();
+        }, 5000); // إزالة القائمة بعد 5 ثواني
         alert('تم نسخ الآية! اختر منصة للمشاركة.');
     }).catch(() => {
         alert('فشل في النسخ، يرجى المحاولة يدويًا.');
