@@ -186,13 +186,26 @@ const resultDiv = document.getElementById('result');
 const verseP = document.getElementById('verse');
 const reciterSelect = document.getElementById('reciter');
 const playAudioBtn = document.getElementById('play-audio');
+const stopAudioBtn = document.getElementById('stop-audio');
+const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
 
-// دالة لعرض الآية وتحديث الألوان
+// دالة لتشغيل الصوت
+function playAudio(reciter, verseKey) {
+    const audioUrl = audioUrls[reciter][verseKey];
+    if (audioUrl) {
+        audio.src = audioUrl;
+        audio.play().catch(error => alert('خطأ في تشغيل الصوت، تأكد من وجود الملف في مجلد audio!'));
+    } else {
+        alert('لا يوجد ملف صوتي متاح لهذه الآية، يرجى إضافة الملف في مجلد audio!');
+    }
+}
+
+// دالة لعرض الآية وتحديث الألوان وتشغيل الصوت تلقائيًا
 function displayVerse(verse, mood) {
     verseP.textContent = verse;
     currentVerse = verse;
@@ -200,9 +213,15 @@ function displayVerse(verse, mood) {
     resultDiv.style.opacity = 1;
 
     // تحديث الألوان بناءً على زر الحالة
-    currentMoodColor = moodColors[mood] || "#4caf50"; // لون زر الرسالة العشوائية إذا لم يكن هناك حالة محددة
+    currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
+    verseP.style.borderLeftColor = currentMoodColor; // تغيير لون الشريط الجانبي
+
+    // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
+    const reciter = reciterSelect.value;
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+    playAudio(reciter, verseKey);
 }
 
 // التعامل مع أزرار الحالة
@@ -221,18 +240,28 @@ randomVerseBtn.addEventListener('click', () => {
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت
+// تشغيل الصوت يدويًا (عند تغيير القارئ)
 playAudioBtn.addEventListener('click', () => {
     const reciter = reciterSelect.value;
-    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, ""); // استخراج المرجع مثل "آل عمران: 159"
-    const audioUrl = audioUrls[reciter][verseKey];
-    
-    if (audioUrl) {
-        audio.src = audioUrl;
-        audio.play().catch(error => alert('خطأ في تشغيل الصوت، تأكد من وجود الملف في مجلد audio!'));
-    } else {
-        alert('لا يوجد ملف صوتي متاح لهذه الآية، يرجى إضافة الملف في مجلد audio!');
-    }
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+    playAudio(reciter, verseKey);
+});
+
+// إيقاف الصوت
+stopAudioBtn.addEventListener('click', () => {
+    audio.pause();
+    audio.currentTime = 0; // إعادة الصوت إلى البداية
+});
+
+// مشاركة الآية
+shareVerseBtn.addEventListener('click', () => {
+    const verseText = verseP.textContent;
+    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [رابط الموقع]`;
+    navigator.clipboard.writeText(shareText).then(() => {
+        alert('تم نسخ الآية بنجاح! يمكنك الآن مشاركتها.');
+    }).catch(() => {
+        alert('فشل في النسخ، يرجى المحاولة يدويًا.');
+    });
 });
 
 // التبديل بين الوضع الفاتح والداكن
