@@ -43,7 +43,6 @@ const verses = {
     ]
 };
 
-// تعريف مسارات الملفات الصوتية المحلية لكل آية
 const audioUrls = {
     "ياسر الدوسري": {
         "آل عمران: 159": "./audio/al_imran_159.mp3",
@@ -170,22 +169,40 @@ const audioUrls = {
 // جمع كل الآيات في مصفوفة واحدة للاختيار العشوائي
 const allVerses = Object.values(verses).flat();
 
+// تعريف الألوان بناءً على الحالة
+const moodColors = {
+    "السعادة": "#6d4c41",
+    "القلق": "#0288d1",
+    "الوحدة": "#78909c",
+    "الشكر": "#f9a825",
+    "الحزن": "#5e35b1",
+    "الغضب": "#d32f2f",
+    "random": "#4caf50" // لون زر الرسالة العشوائية
+};
+
 const moodButtons = document.querySelectorAll('.mood-btn');
 const randomVerseBtn = document.getElementById('random-verse-btn');
 const resultDiv = document.getElementById('result');
 const verseP = document.getElementById('verse');
 const reciterSelect = document.getElementById('reciter');
 const playAudioBtn = document.getElementById('play-audio');
+const reciterLabel = document.querySelector('#result h3');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
+let currentMoodColor = "#6d4c41"; // اللون الافتراضي
 
-// دالة لعرض الآية
-function displayVerse(verse) {
+// دالة لعرض الآية وتحديث الألوان
+function displayVerse(verse, mood) {
     verseP.textContent = verse;
     currentVerse = verse;
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
+
+    // تحديث الألوان بناءً على زر الحالة
+    currentMoodColor = moodColors[mood] || "#4caf50"; // لون زر الرسالة العشوائية إذا لم يكن هناك حالة محددة
+    playAudioBtn.style.backgroundColor = currentMoodColor;
+    reciterLabel.style.color = currentMoodColor;
 }
 
 // التعامل مع أزرار الحالة
@@ -194,14 +211,14 @@ moodButtons.forEach(button => {
         const mood = button.getAttribute('data-mood');
         const verseList = verses[mood];
         const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
-        displayVerse(randomVerse);
+        displayVerse(randomVerse, mood);
     });
 });
 
 // زر الآية العشوائية
 randomVerseBtn.addEventListener('click', () => {
     const randomVerse = allVerses[Math.floor(Math.random() * allVerses.length)];
-    displayVerse(randomVerse);
+    displayVerse(randomVerse, "random");
 });
 
 // تشغيل الصوت
