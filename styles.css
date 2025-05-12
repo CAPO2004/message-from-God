@@ -172,18 +172,13 @@ body.dark #verse {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: linear-gradient(145deg, #f0f0f0, #d9d9d9);
     padding: 10px 15px;
     border-radius: 25px;
     width: 100%;
     max-width: 450px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.5);
-    transition: background 0.3s;
 }
 
 body.dark .audio-timeline {
-    background: linear-gradient(145deg, #2a3b3a, #1a2c2b);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .audio-timeline button {
@@ -214,65 +209,83 @@ body.dark .audio-timeline #volume-control:hover {
 
 #audio-progress {
     flex-grow: 1;
-    height: 10px;
-    background: linear-gradient(to right, #d3d3d3, #b0b0b0);
+    height: 5px;
+    background: #d3d3d3;
     border-radius: 5px;
     position: relative;
     cursor: pointer;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background 0.3s;
 }
 
 body.dark #audio-progress {
-    background: linear-gradient(to right, #555, #333);
+    background: #555;
+}
+
+#audio-progress::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 12px;
+    transform: translateY(-50%);
+    background: repeating-linear-gradient(
+        to right,
+        #666 0,
+        #666 2px,
+        transparent 2px,
+        transparent 10px
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+body.dark #audio-progress::before {
+    background: repeating-linear-gradient(
+        to right,
+        #ccc 0,
+        #ccc 2px,
+        transparent 2px,
+        transparent 10px
+    );
 }
 
 #progress-bar {
     position: absolute;
     height: 100%;
-    background: linear-gradient(to right, #00c853, #4caf50, #81c784);
+    background: #81c784;
     width: 0;
     border-radius: 5px;
     transition: width 0.1s linear;
-    box-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
+    z-index: 2;
 }
 
 body.dark #progress-bar {
-    background: linear-gradient(to right, #00e676, #66bb6a, #a5d6a7);
-    box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+    background: #a5d6a7;
 }
 
 #progress-thumb {
     position: absolute;
-    left: -10px;
+    left: -6px;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, #fff 40%, #4caf50 100%);
-    border: 2px solid #00c853;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border: 2px solid #4caf50;
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 200, 83, 0.6);
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s, border-color 0.3s;
-    z-index: 10;
+    transition: transform 0.2s;
+    z-index: 3;
 }
 
 body.dark #progress-thumb {
-    background: radial-gradient(circle, #2a3b3a 40%, #66bb6a 100%);
-    border-color: #00e676;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 230, 118, 0.6);
+    background: #2a3b3a;
+    border-color: #66bb6a;
 }
 
 #progress-thumb:hover {
     transform: translateY(-50%) scale(1.2);
-    background: radial-gradient(circle, #e8f5e9 40%, #388e3c 100%);
-    border-color: #00a843;
-}
-
-body.dark #progress-thumb:hover {
-    background: radial-gradient(circle, #1a3c34 40%, #4caf50 100%);
-    border-color: #00c853;
 }
 
 #progress-thumb:active {
@@ -510,9 +523,9 @@ body.dark .theme-toggle i {
     }
 
     #progress-thumb {
-        width: 16px;
-        height: 16px;
-        left: -8px;
+        width: 10px;
+        height: 10px;
+        left: -5px;
     }
 }
 
