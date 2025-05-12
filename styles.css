@@ -172,29 +172,28 @@ body.dark #verse {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: linear-gradient(145deg, #f0f0f0, #d9d9d9);
-    padding: 10px 15px;
-    border-radius: 25px;
+    background: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 20px;
     width: 100%;
-    max-width: 450px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), inset 0 2px 5px rgba(255, 255, 255, 0.5);
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     transition: background 0.3s;
 }
 
 body.dark .audio-timeline {
-    background: linear-gradient(145deg, #2a3b3a, #1a2c2b);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), inset 0 2px 5px rgba(0, 0, 0, 0.5);
+    background: #2a3b3a;
 }
 
 .audio-timeline button {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #666;
     padding: 0;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     transition: color 0.3s;
 }
 
@@ -214,65 +213,62 @@ body.dark .audio-timeline #volume-control:hover {
 
 #audio-progress {
     flex-grow: 1;
-    height: 10px;
-    background: linear-gradient(to right, #d3d3d3, #b0b0b0);
-    border-radius: 5px;
+    height: 8px;
+    background: linear-gradient(to right, #e0e0e0, #d0d0d0);
+    border-radius: 4px;
     position: relative;
+    overflow: hidden;
     cursor: pointer;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: background 0.3s;
 }
 
 body.dark #audio-progress {
-    background: linear-gradient(to right, #555, #333);
+    background: linear-gradient(to right, #444, #555);
 }
 
 #progress-bar {
     position: absolute;
     height: 100%;
-    background: linear-gradient(to right, #00c853, #4caf50, #81c784);
+    background: linear-gradient(to right, #4caf50, #66bb6a);
     width: 0;
-    border-radius: 5px;
+    border-radius: 4px;
     transition: width 0.1s linear;
-    box-shadow: 0 0 10px rgba(0, 200, 83, 0.5);
 }
 
 body.dark #progress-bar {
-    background: linear-gradient(to right, #00e676, #66bb6a, #a5d6a7);
-    box-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+    background: linear-gradient(to right, #81c784, #a5d6a7);
 }
 
 #progress-thumb {
     position: absolute;
-    left: -10px;
+    right: -8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, #fff 40%, #4caf50 100%);
-    border: 2px solid #00c853;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 2px solid #4caf50;
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 200, 83, 0.6);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s, border-color 0.3s;
+    transition: transform 0.2s, border-color 0.3s, background 0.3s;
     z-index: 10;
 }
 
 body.dark #progress-thumb {
-    background: radial-gradient(circle, #2a3b3a 40%, #66bb6a 100%);
-    border-color: #00e676;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5), 0 0 12px rgba(0, 230, 118, 0.6);
+    background: #2a3b3a;
+    border-color: #81c784;
 }
 
 #progress-thumb:hover {
     transform: translateY(-50%) scale(1.2);
-    background: radial-gradient(circle, #e8f5e9 40%, #388e3c 100%);
-    border-color: #00a843;
+    border-color: #388e3c;
+    background: #e8f5e9;
 }
 
 body.dark #progress-thumb:hover {
-    background: radial-gradient(circle, #1a3c34 40%, #4caf50 100%);
-    border-color: #00c853;
+    border-color: #66bb6a;
+    background: #1a3c34;
 }
 
 #progress-thumb:active {
@@ -510,9 +506,9 @@ body.dark .theme-toggle i {
     }
 
     #progress-thumb {
-        width: 16px;
-        height: 16px;
-        left: -8px;
+        width: 14px;
+        height: 14px;
+        right: -7px;
     }
 }
 
