@@ -271,10 +271,11 @@ randomVerseBtn.addEventListener('click', () => {
 
 // تشغيل الصوت يدويًا
 playAudioBtn.addEventListener('click', () => {
-    audio.pause();
-    const reciter = reciterSelect.value;
-    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-    playAudio(reciter, verseKey);
+    if (audio.paused) {
+        audio.play().then(() => {
+            updateProgress();
+        });
+    }
 });
 
 // إيقاف الصوت
@@ -313,7 +314,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
