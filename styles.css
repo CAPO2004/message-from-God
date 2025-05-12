@@ -139,7 +139,9 @@ body.dark #result h3 {
     line-height: 1.8;
     text-align: center;
     padding: 10px;
-    font-family: 'Cairo', 'Amiri', serif;
+    border-left: 4px solid #6d4c41; /* إعادة الخط الجانبي */
+    border-radius: 5px;
+    font-family: 'Amiri Quran', serif; /* خط قرآني تقليدي */
     animation: fadeIn 1s ease-in-out;
 }
 
@@ -158,7 +160,14 @@ body.dark #verse {
     }
 }
 
-#play-audio {
+.audio-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#play-audio, #stop-audio, #share-verse {
     padding: 12px 25px;
     color: #fff;
     border: none;
@@ -168,7 +177,25 @@ body.dark #verse {
     font-family: 'Amiri', serif;
 }
 
-#play-audio:hover {
+#stop-audio {
+    background: #d32f2f;
+}
+
+#stop-audio:hover {
+    background: #b71c1c;
+    transform: translateY(-2px);
+}
+
+#share-verse {
+    background: #0288d1;
+}
+
+#share-verse:hover {
+    background: #01579b;
+    transform: translateY(-2px);
+}
+
+#play-audio:hover, #stop-audio:hover, #share-verse:hover {
     transform: translateY(-2px);
 }
 
@@ -296,6 +323,11 @@ body.dark .theme-toggle i {
     #random-verse-btn {
         font-size: 1rem;
         padding: 10px 20px;
+    }
+
+    .audio-controls {
+        flex-direction: column;
+        gap: 8px;
     }
 }
 
