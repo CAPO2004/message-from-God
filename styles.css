@@ -203,6 +203,7 @@ body.dark #verse {
     border-radius: 2.5px;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 #progress-bar {
