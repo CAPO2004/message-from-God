@@ -129,6 +129,7 @@ const playAudioBtn = document.getElementById('play-audio');
 const stopAudioBtn = document.getElementById('stop-audio');
 const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
+const audioProgress = document.getElementById('audio-progress');
 const progressBar = document.getElementById('progress-bar');
 const currentTimeSpan = document.getElementById('current-time');
 const durationSpan = document.getElementById('duration');
@@ -152,21 +153,24 @@ function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
         audio.src = audioUrl;
-        audio.muted = isMuted; // الحفاظ على حالة الصوت (مكتوم أو لا)
+        audio.muted = isMuted;
+        audio.currentTime = 0; // التأكد من بدء الصوت من الصفر
+        progressBar.style.width = "0"; // إعادة تعيين الشريط
+        currentTimeSpan.textContent = "0:00";
         audio.play().then(() => {
-            durationSpan.textContent = formatTime(audio.duration);
+            durationSpan.textContent = formatTime(audio.duration || 0);
             updateProgress();
-        }).catch(error => alert('خطأ في تشغيل الصوت، تأكد من وجود الملف في مجلد audio!'));
-    } else {
-        alert('لا يوجد ملف صوتي متاح لهذه الآية، يرجى إضافة الملف في مجلد audio!');
+        }).catch(() => {
+            // لا رسائل خطأ
+        });
     }
 }
 
 // دالة لتحديث شريط التقدم والزمن
 function updateProgress() {
-    if (!audio.paused && audio.duration) {
+    if (audio.duration && !audio.paused) {
         const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${progress}%`;
+        progressBar.style.width = `${Math.min(progress, 100)}%`; // التأكد من عدم التجاوز
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -191,6 +195,18 @@ function displayVerse(verse, mood) {
     playAudio(reciter, verseKey);
 }
 
+// جعل الخط الزمني تفاعليًا
+audioProgress.addEventListener('click', (e) => {
+    if (audio.duration) {
+        const rect = audioProgress.getBoundingClientRect();
+        const offsetX = e.clientX - rect.left;
+        const progressPercent = offsetX / rect.width;
+        audio.currentTime = progressPercent * audio.duration;
+        progressBar.style.width = `${progressPercent * 100}%`;
+        currentTimeSpan.textContent = formatTime(audio.currentTime);
+    }
+});
+
 // التعامل مع أزرار الحالة
 moodButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -207,13 +223,12 @@ randomVerseBtn.addEventListener('click', () => {
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت يدويًا (مع تحديث القارئ)
+// تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
 playAudioBtn.addEventListener('click', () => {
-    if (audio.paused) {
-        const reciter = reciterSelect.value;
-        const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-        playAudio(reciter, verseKey);
-    }
+    audio.pause(); // إيقاف الصوت الحالي
+    const reciter = reciterSelect.value;
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+    playAudio(reciter, verseKey);
 });
 
 // إيقاف الصوت
@@ -252,7 +267,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
