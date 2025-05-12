@@ -178,6 +178,7 @@ body.dark #verse {
     width: 100%;
     max-width: 400px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s;
 }
 
 body.dark .audio-timeline {
@@ -248,9 +249,10 @@ body.dark #progress-bar {
     background: #fff;
     border: 2px solid #4caf50;
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    transition: transform 0.2s, border-color 0.3s;
+    transition: transform 0.2s, border-color 0.3s, background 0.3s;
+    z-index: 10;
 }
 
 body.dark #progress-thumb {
@@ -261,10 +263,12 @@ body.dark #progress-thumb {
 #progress-thumb:hover {
     transform: translateY(-50%) scale(1.2);
     border-color: #388e3c;
+    background: #e8f5e9;
 }
 
 body.dark #progress-thumb:hover {
     border-color: #66bb6a;
+    background: #1a3c34;
 }
 
 #progress-thumb:active {
