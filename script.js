@@ -130,19 +130,29 @@ const stopAudioBtn = document.getElementById('stop-audio');
 const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
 const audioProgress = document.getElementById('audio-progress');
+const currentTimeSpan = document.getElementById('current-time');
+const durationSpan = document.getElementById('duration');
+const rewindAudioBtn = document.getElementById('rewind-audio');
+const volumeControlBtn = document.getElementById('volume-control');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
-let audioDuration = 0;
 
-// دالة لتشغيل الصوت وتحديث شريط التقدم
+// دالة تحويل الثواني إلى تنسيق زمني (mm:ss)
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// دالة لتشغيل الصوت وتحديث الزمن
 function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
         audio.src = audioUrl;
         audio.play().then(() => {
-            audioDuration = audio.duration;
+            durationSpan.textContent = formatTime(audio.duration);
             updateProgress();
         }).catch(error => alert('خطأ في تشغيل الصوت، تأكد من وجود الملف في مجلد audio!'));
     } else {
@@ -150,14 +160,13 @@ function playAudio(reciter, verseKey) {
     }
 }
 
-// دالة لتحديث شريط التقدم
+// دالة لتحديث شريط التقدم والزمن
 function updateProgress() {
-    const progress = (audio.currentTime / audioDuration) * 100;
-    audioProgress.style.width = `${progress}%`;
-    if (audio.currentTime < audioDuration) {
+    if (!audio.paused) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        audioProgress.style.width = `${progress}%`;
+        currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
-    } else {
-        audioProgress.style.width = "0";
     }
 }
 
@@ -198,9 +207,10 @@ randomVerseBtn.addEventListener('click', () => {
 
 // تشغيل الصوت يدويًا (عند تغيير القارئ)
 playAudioBtn.addEventListener('click', () => {
-    const reciter = reciterSelect.value;
-    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-    playAudio(reciter, verseKey);
+    if (audio.paused) {
+        audio.play();
+        updateProgress();
+    }
 });
 
 // إيقاف الصوت
@@ -208,6 +218,14 @@ stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
     audioProgress.style.width = "0";
+    currentTimeSpan.textContent = "0:00";
+});
+
+// إعادة الصوت إلى البداية
+rewindAudioBtn.addEventListener('click', () => {
+    audio.currentTime = 0;
+    audioProgress.style.width = "0";
+    currentTimeSpan.textContent = "0:00";
 });
 
 // مشاركة الآية مع قائمة منصات التواصل
