@@ -63,12 +63,12 @@ body.dark h2 {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     color: #fff;
     font-family: 'Amiri', serif;
-    width: 150px; /* Unified width */
-    height: 60px; /* Unified height */
+    width: 150px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Space between icon and text */
+    gap: 10px;
 }
 
 .mood-btn i {
@@ -125,7 +125,7 @@ body.dark #result {
 #result h3 {
     font-size: 1.3rem;
     margin-bottom: 15px;
-    color: #6d4c41;
+    transition: color 0.3s;
 }
 
 body.dark #result h3 {
@@ -139,15 +139,12 @@ body.dark #result h3 {
     line-height: 1.8;
     text-align: center;
     padding: 10px;
-    border-left: 4px solid #6d4c41;
-    border-radius: 5px;
-    font-family: 'Cairo', 'Amiri', serif; /* Updated font for Quran verse */
-    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+    font-family: 'Cairo', 'Amiri', serif;
+    animation: fadeIn 1s ease-in-out;
 }
 
 body.dark #verse {
     color: #f0e8d4;
-    border-left-color: #c4a484;
 }
 
 @keyframes fadeIn {
@@ -163,7 +160,6 @@ body.dark #verse {
 
 #play-audio {
     padding: 12px 25px;
-    background: #6d4c41;
     color: #fff;
     border: none;
     border-radius: 20px;
@@ -173,7 +169,6 @@ body.dark #verse {
 }
 
 #play-audio:hover {
-    background: #5a3e31;
     transform: translateY(-2px);
 }
 
@@ -238,24 +233,16 @@ body.dark .social-links a:hover {
     position: fixed;
     top: 20px;
     left: 20px;
-    padding: 12px;
-    background: #fff;
+    background: none;
     border: none;
-    border-radius: 50%;
     font-size: 2rem;
     cursor: pointer;
     color: #f9a825;
-    transition: color 0.5s, background 0.5s, transform 0.3s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: color 0.5s;
 }
 
 body.dark .theme-toggle {
-    background: #333;
     color: #f0e8d4;
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
 }
 
 .theme-toggle i {
@@ -304,7 +291,6 @@ body.dark .theme-toggle i {
 
     .theme-toggle {
         font-size: 1.5rem;
-        padding: 8px;
     }
 
     #random-verse-btn {
