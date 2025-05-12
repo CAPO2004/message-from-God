@@ -172,86 +172,54 @@ body.dark #verse {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 5px 0;
+    padding: 8px 15px;
+    background: #a5d6a7;
+    border-radius: 20px;
     width: 100%;
     max-width: 450px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 body.dark .audio-timeline {
+    background: #388e3c;
 }
 
 .audio-timeline button {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    color: #666;
-    padding: 0;
-    width: 20px;
-    height: 20px;
-    transition: color 0.3s;
-}
-
-body.dark .audio-timeline button {
-    color: #ccc;
-}
-
-.audio-timeline #rewind-audio:hover,
-.audio-timeline #volume-control:hover {
-    color: #000;
-}
-
-body.dark .audio-timeline #rewind-audio:hover,
-body.dark .audio-timeline #volume-control:hover {
+    font-size: 1.2rem;
     color: #fff;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
+
+.audio-timeline button:hover {
+    opacity: 0.8;
 }
 
 #audio-progress {
     flex-grow: 1;
     height: 4px;
-    background: #e0e0e0;
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 2px;
     position: relative;
     cursor: pointer;
 }
 
 body.dark #audio-progress {
-    background: #444;
-}
-
-#audio-progress::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 8px;
-    transform: translateY(-50%);
-    background: repeating-linear-gradient(
-        to right,
-        #666 0,
-        #666 2px,
-        transparent 2px,
-        transparent 10px
-    );
-    z-index: 1;
-    pointer-events: none;
-}
-
-body.dark #audio-progress::before {
-    background: repeating-linear-gradient(
-        to right,
-        #ccc 0,
-        #ccc 2px,
-        transparent 2px,
-        transparent 10px
-    );
+    background: rgba(255, 255, 255, 0.5);
 }
 
 #progress-bar {
     position: absolute;
     height: 100%;
-    background: #4caf50;
+    background: #fff;
     width: 0;
     border-radius: 2px;
     transition: width 0.1s linear;
@@ -259,7 +227,7 @@ body.dark #audio-progress::before {
 }
 
 body.dark #progress-bar {
-    background: #66bb6a;
+    background: #e0e0e0;
 }
 
 #progress-thumb {
@@ -269,7 +237,7 @@ body.dark #progress-bar {
     transform: translateY(-50%);
     width: 10px;
     height: 10px;
-    background: #4caf50;
+    background: #fff;
     border: 2px solid #388e3c;
     border-radius: 50%;
     cursor: pointer;
@@ -278,8 +246,8 @@ body.dark #progress-bar {
 }
 
 body.dark #progress-thumb {
-    background: #66bb6a;
-    border-color: #2e7d32;
+    background: #e0e0e0;
+    border-color: #66bb6a;
 }
 
 #progress-thumb:hover {
@@ -292,14 +260,14 @@ body.dark #progress-thumb {
 
 #current-time, #duration {
     font-size: 0.9rem;
-    color: #666;
+    color: #fff;
     min-width: 30px;
     text-align: center;
     font-weight: 500;
 }
 
 body.dark #current-time, body.dark #duration {
-    color: #ccc;
+    color: #e0e0e0;
 }
 
 .audio-buttons {
@@ -321,33 +289,25 @@ body.dark #current-time, body.dark #duration {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#play-audio:hover, #stop-audio:hover, #share-verse:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 #play-audio {
     background: #4caf50;
 }
 
-#play-audio:hover {
-    background: #45a049;
-    transform: translateY(-2px);
-}
-
 #stop-audio {
     background: #d32f2f;
 }
 
-#stop-audio:hover {
-    background: #b71c1c;
-    transform: translateY(-2px);
-}
-
 #share-verse {
     background: #0288d1;
-}
-
-#share-verse:hover {
-    background: #01579b;
-    transform: translateY(-2px);
 }
 
 #social-menu {
