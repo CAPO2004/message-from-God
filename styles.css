@@ -178,6 +178,7 @@ body.dark #verse {
     width: 100%;
     max-width: 450px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
 }
 
 body.dark .audio-timeline {
@@ -273,27 +274,26 @@ body.dark #current-time, body.dark #duration {
 .audio-buttons {
     display: flex;
     gap: 10px;
-    justify-content: center;
+    align-items: center;
 }
 
-#play-audio, #stop-audio, #share-verse {
-    padding: 12px;
+#play-audio, #stop-audio {
+    padding: 5px;
     color: #fff;
     border: none;
     border-radius: 50%;
     cursor: pointer;
     transition: background 0.4s, transform 0.4s;
-    font-size: 1.2rem;
-    width: 40px;
-    height: 40px;
+    font-size: 1rem;
+    width: 25px;
+    height: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#play-audio:hover, #stop-audio:hover, #share-verse:hover {
+#play-audio:hover, #stop-audio:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.3);
 }
@@ -307,7 +307,25 @@ body.dark #current-time, body.dark #duration {
 }
 
 #share-verse {
+    padding: 12px;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.4s, transform 0.4s;
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #0288d1;
+    margin-top: 10px;
+}
+
+#share-verse:hover {
+    transform: translateY(-2px);
+    background: #01579b;
 }
 
 #social-menu {
@@ -468,7 +486,13 @@ body.dark .theme-toggle i {
         max-width: 250px;
     }
 
-    #play-audio, #stop-audio, #share-verse {
+    #play-audio, #stop-audio {
+        width: 20px;
+        height: 20px;
+        font-size: 0.9rem;
+    }
+
+    #share-verse {
         width: 35px;
         height: 35px;
         font-size: 1rem;
