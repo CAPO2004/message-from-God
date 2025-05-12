@@ -157,7 +157,7 @@ function playAudio(reciter, verseKey) {
     if (audioUrl) {
         audio.pause();
         progressBar.style.width = "0";
-        progressThumb.style.left = "-10px";
+        progressThumb.style.left = "-6px";
         currentTimeSpan.textContent = "0:00";
         durationSpan.textContent = "0:00";
 
@@ -178,9 +178,9 @@ function playAudio(reciter, verseKey) {
 // دالة لتحديث شريط التقدم والزمن
 function updateProgress() {
     if (audio.duration && !audio.paused && !isDragging) {
-        const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${progress}%`;
-        progressThumb.style.left = `calc(${progress}% - 10px)`;
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${progressPercent}%`;
+        progressThumb.style.left = `calc(${progressPercent}% - 6px)`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -189,22 +189,23 @@ function updateProgress() {
 // دالة لتحديث موضع الصوت بناءً على النقر أو السحب
 function updateAudioPosition(clientX) {
     const rect = audioProgress.getBoundingClientRect();
-    const offsetX = clientX - rect.left; // حساب المسافة من اليسار بدقة
-    if (offsetX >= 0 && offsetX <= rect.width) {
-        const progressPercent = offsetX / rect.width;
-        audio.currentTime = progressPercent * audio.duration;
-        progressBar.style.width = `${progressPercent * 100}%`;
-        progressThumb.style.left = `calc(${progressPercent * 100}% - 10px)`;
-        currentTimeSpan.textContent = formatTime(audio.currentTime);
-    }
+    const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const progressPercent = offsetX / rect.width;
+    audio.currentTime = progressPercent * audio.duration;
+    progressBar.style.width = `${progressPercent * 100}%`;
+    progressThumb.style.left = `calc(${progressPercent * 100}% - 6px)`;
+    currentTimeSpan.textContent = formatTime(audio.currentTime);
 }
 
 // جعل الخط الزمني تفاعليًا (النقر)
 audioProgress.addEventListener('click', (e) => {
     if (audio.duration) {
         updateAudioPosition(e.clientX);
-        if (audio.paused) audio.play();
-        updateProgress();
+        if (audio.paused) {
+            audio.play().then(() => {
+                updateProgress();
+            });
+        }
     }
 });
 
@@ -224,10 +225,9 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
     if (isDragging) {
         isDragging = false;
-        if (!audio.paused) {
-            audio.play();
+        audio.play().then(() => {
             updateProgress();
-        }
+        });
     }
 });
 
@@ -244,7 +244,7 @@ function displayVerse(verse, mood) {
     verseP.style.borderLeftColor = currentMoodColor;
 
     progressBar.style.width = "0";
-    progressThumb.style.left = "-10px";
+    progressThumb.style.left = "-6px";
     currentTimeSpan.textContent = "0:00";
     durationSpan.textContent = "0:00";
 
@@ -282,7 +282,7 @@ stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
     progressBar.style.width = "0";
-    progressThumb.style.left = "-10px";
+    progressThumb.style.left = "-6px";
     currentTimeSpan.textContent = "0:00";
 });
 
@@ -290,7 +290,7 @@ stopAudioBtn.addEventListener('click', () => {
 rewindAudioBtn.addEventListener('click', () => {
     audio.currentTime = 0;
     progressBar.style.width = "0";
-    progressThumb.style.left = "-10px";
+    progressThumb.style.left = "-6px";
     currentTimeSpan.textContent = "0:00";
 });
 
@@ -313,7 +313,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
