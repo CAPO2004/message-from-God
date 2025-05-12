@@ -145,7 +145,6 @@ let isDragging = false;
 
 // دالة تحويل الثواني إلى تنسيق زمني (mm:ss)
 function formatTime(seconds) {
-    if (isNaN(seconds)) return "0:00";
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
@@ -155,32 +154,28 @@ function formatTime(seconds) {
 function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
-        audio.pause();
+        // إعادة تعيين الشريط والزمن قبل التشغيل
         progressBar.style.width = "0";
-        progressThumb.style.left = "-5px";
         currentTimeSpan.textContent = "0:00";
-        durationSpan.textContent = "0:00";
-
         audio.src = audioUrl;
-        audio.load();
+        audio.load(); // إعادة تحميل الملف لضمان البدء من الصفر
         audio.muted = isMuted;
-
-        audio.addEventListener('loadedmetadata', () => {
-            audio.currentTime = 0;
-            durationSpan.textContent = formatTime(audio.duration);
-            audio.play().then(() => {
-                updateProgress();
-            }).catch(() => {});
-        }, { once: true });
+        audio.currentTime = 0; // التأكد من بدء الصوت من الصفر
+        audio.play().then(() => {
+            durationSpan.textContent = formatTime(audio.duration || 0);
+            updateProgress();
+        }).catch(() => {
+            // لا رسائل خطأ
+        });
     }
 }
 
 // دالة لتحديث شريط التقدم والزمن
 function updateProgress() {
     if (audio.duration && !audio.paused && !isDragging) {
-        const progressPercent = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${progressPercent}%`;
-        progressThumb.style.left = `calc(${progressPercent}% - 5px)`;
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${progress}%`; // تحديث الشريط بنسبة التقدم
+        progressThumb.style.left = `calc(${progress}% - 8px)`; // تحريك الدائرة مع الشريط
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -193,7 +188,7 @@ function updateAudioPosition(clientX) {
     const progressPercent = offsetX / rect.width;
     audio.currentTime = progressPercent * audio.duration;
     progressBar.style.width = `${progressPercent * 100}%`;
-    progressThumb.style.left = `calc(${progressPercent * 100}% - 5px)`;
+    progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`; // تحريك الدائرة بدقة
     currentTimeSpan.textContent = formatTime(audio.currentTime);
 }
 
@@ -201,19 +196,16 @@ function updateAudioPosition(clientX) {
 audioProgress.addEventListener('click', (e) => {
     if (audio.duration) {
         updateAudioPosition(e.clientX);
-        if (audio.paused) {
-            audio.play().then(() => {
-                updateProgress();
-            });
-        }
+        if (audio.paused) audio.play(); // استئناف التشغيل إذا كان متوقفًا
+        updateProgress();
     }
 });
 
 // جعل الدائرة قابلة للسحب
 progressThumb.addEventListener('mousedown', (e) => {
     isDragging = true;
-    audio.pause();
-    e.preventDefault();
+    audio.pause(); // إيقاف الصوت مؤقتًا أثناء السحب
+    e.preventDefault(); // منع السلوك الافتراضي
 });
 
 document.addEventListener('mousemove', (e) => {
@@ -225,9 +217,10 @@ document.addEventListener('mousemove', (e) => {
 document.addEventListener('mouseup', () => {
     if (isDragging) {
         isDragging = false;
-        audio.play().then(() => {
+        if (!audio.paused) {
+            audio.play(); // استئناف التشغيل بعد السحب
             updateProgress();
-        });
+        }
     }
 });
 
@@ -238,16 +231,18 @@ function displayVerse(verse, mood) {
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
 
+    // تحديث الألوان بناءً على زر الحالة
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
+    // إعادة تعيين الشريط قبل تشغيل الصوت
     progressBar.style.width = "0";
-    progressThumb.style.left = "-5px";
+    progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
-    durationSpan.textContent = "0:00";
 
+    // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
     const reciter = reciterSelect.value;
     const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
     playAudio(reciter, verseKey);
@@ -269,13 +264,12 @@ randomVerseBtn.addEventListener('click', () => {
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت يدويًا
+// تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
 playAudioBtn.addEventListener('click', () => {
-    if (audio.paused) {
-        audio.play().then(() => {
-            updateProgress();
-        });
-    }
+    audio.pause(); // إيقاف الصوت الحالي
+    const reciter = reciterSelect.value;
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+    playAudio(reciter, verseKey);
 });
 
 // إيقاف الصوت
@@ -283,7 +277,7 @@ stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
     progressBar.style.width = "0";
-    progressThumb.style.left = "-5px";
+    progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
 });
 
@@ -291,7 +285,7 @@ stopAudioBtn.addEventListener('click', () => {
 rewindAudioBtn.addEventListener('click', () => {
     audio.currentTime = 0;
     progressBar.style.width = "0";
-    progressThumb.style.left = "-5px";
+    progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
 });
 
@@ -303,26 +297,28 @@ volumeControlBtn.addEventListener('click', () => {
     volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
 });
 
-// مشاركة الآية
+// مشاركة الآية مع قائمة منصات التواصل
 shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
-    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [رابط الموقع]`;
+    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [https://message-from-god.netlify.app/]`;
     navigator.clipboard.writeText(shareText).then(() => {
+        // إزالة أي قائمة سابقة
         const existingMenu = document.getElementById('social-menu');
         if (existingMenu) existingMenu.remove();
 
+        // إظهار قائمة منصات التواصل
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
-                <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
         resultDiv.insertAdjacentHTML('beforeend', socialOptions);
         setTimeout(() => {
             const menu = document.getElementById('social-menu');
             if (menu) menu.remove();
-        }, 5000);
+        }, 5000); // إزالة القائمة بعد 5 ثواني
         alert('تم نسخ الآية! اختر منصة للمشاركة.');
     }).catch(() => {
         alert('فشل في النسخ، يرجى المحاولة يدويًا.');
