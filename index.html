@@ -43,10 +43,18 @@
             </select>
             <p id="verse"></p>
             <div class="audio-controls">
-                <div id="audio-progress"></div>
-                <button id="play-audio"><i class="fas fa-play"></i></button>
-                <button id="stop-audio"><i class="fas fa-stop"></i></button>
-                <button id="share-verse"><i class="fas fa-share"></i></button>
+                <div class="audio-timeline">
+                    <button id="rewind-audio"><i class="fas fa-step-backward"></i></button>
+                    <span id="current-time">0:00</span>
+                    <div id="audio-progress"></div>
+                    <span id="duration">0:00</span>
+                    <button id="volume-control"><i class="fas fa-volume-up"></i></button>
+                </div>
+                <div class="audio-buttons">
+                    <button id="play-audio"><i class="fas fa-play"></i></button>
+                    <button id="stop-audio"><i class="fas fa-stop"></i></button>
+                    <button id="share-verse"><i class="fas fa-share"></i></button>
+                </div>
             </div>
         </div>
     </div>
