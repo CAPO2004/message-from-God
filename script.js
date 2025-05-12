@@ -131,6 +131,7 @@ const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
 const audioProgress = document.getElementById('audio-progress');
 const progressBar = document.getElementById('progress-bar');
+const progressThumb = document.getElementById('progress-thumb');
 const currentTimeSpan = document.getElementById('current-time');
 const durationSpan = document.getElementById('duration');
 const rewindAudioBtn = document.getElementById('rewind-audio');
@@ -140,6 +141,7 @@ let audio = new Audio();
 let currentVerse = "";
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
 let isMuted = false;
+let isDragging = false;
 
 // دالة تحويل الثواني إلى تنسيق زمني (mm:ss)
 function formatTime(seconds) {
@@ -152,11 +154,12 @@ function formatTime(seconds) {
 function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
+        // إعادة تعيين الشريط والزمن قبل التشغيل
+        progressBar.style.width = "0";
+        currentTimeSpan.textContent = "0:00";
         audio.src = audioUrl;
         audio.muted = isMuted;
         audio.currentTime = 0; // التأكد من بدء الصوت من الصفر
-        progressBar.style.width = "0"; // إعادة تعيين الشريط
-        currentTimeSpan.textContent = "0:00";
         audio.play().then(() => {
             durationSpan.textContent = formatTime(audio.duration || 0);
             updateProgress();
@@ -168,13 +171,52 @@ function playAudio(reciter, verseKey) {
 
 // دالة لتحديث شريط التقدم والزمن
 function updateProgress() {
-    if (audio.duration && !audio.paused) {
+    if (audio.duration && !audio.paused && !isDragging) {
         const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${Math.min(progress, 100)}%`; // التأكد من عدم التجاوز
+        progressBar.style.width = `${Math.min(progress, 100)}%`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
 }
+
+// دالة لتحديث موضع الصوت بناءً على السحب أو النقر
+function updateAudioPosition(clientX) {
+    const rect = audioProgress.getBoundingClientRect();
+    const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const progressPercent = offsetX / rect.width;
+    audio.currentTime = progressPercent * audio.duration;
+    progressBar.style.width = `${progressPercent * 100}%`;
+    currentTimeSpan.textContent = formatTime(audio.currentTime);
+}
+
+// جعل الخط الزمني تفاعليًا (النقر)
+audioProgress.addEventListener('click', (e) => {
+    if (audio.duration) {
+        updateAudioPosition(e.clientX);
+    }
+});
+
+// جعل الدائرة قابلة للسحب
+progressThumb.addEventListener('mousedown', () => {
+    isDragging = true;
+    audio.pause(); // إيقاف الصوت مؤقتًا أثناء السحب
+});
+
+document.addEventListener('mousemove', (e) => {
+    if (isDragging && audio.duration) {
+        updateAudioPosition(e.clientX);
+    }
+});
+
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        if (!audio.paused) {
+            audio.play(); // استئناف التشغيل بعد السحب
+            updateProgress();
+        }
+    }
+});
 
 // دالة لعرض الآية وتحديث الألوان وتشغيل الصوت تلقائيًا
 function displayVerse(verse, mood) {
@@ -189,23 +231,15 @@ function displayVerse(verse, mood) {
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
+    // إعادة تعيين الشريط قبل تشغيل الصوت
+    progressBar.style.width = "0";
+    currentTimeSpan.textContent = "0:00";
+
     // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
     const reciter = reciterSelect.value;
     const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
     playAudio(reciter, verseKey);
 }
-
-// جعل الخط الزمني تفاعليًا
-audioProgress.addEventListener('click', (e) => {
-    if (audio.duration) {
-        const rect = audioProgress.getBoundingClientRect();
-        const offsetX = e.clientX - rect.left;
-        const progressPercent = offsetX / rect.width;
-        audio.currentTime = progressPercent * audio.duration;
-        progressBar.style.width = `${progressPercent * 100}%`;
-        currentTimeSpan.textContent = formatTime(audio.currentTime);
-    }
-});
 
 // التعامل مع أزرار الحالة
 moodButtons.forEach(button => {
