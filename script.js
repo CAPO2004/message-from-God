@@ -103,66 +103,6 @@ const audioUrls = {
         "الأعراف: 199": "./audio/al_araf_199_qatami.mp3",
         "فصلت: 34": "./audio/fussilat_34_qatami.mp3",
         "الشورى: 40": "./audio/ash_shura_40_qatami.mp3"
-    },
-    "مشاري العفاسي": {
-        "آل عمران: 159": "./audio/al_imran_159_alafasy.mp3",
-        "النجم: 43": "./audio/an_najm_43_alafasy.mp3",
-        "الأعراف: 156": "./audio/al_araf_156_alafasy.mp3",
-        "يونس: 58": "./audio/yunus_58_alafasy.mp3",
-        "الحجر: 87": "./audio/al_hijr_87_alafasy.mp3",
-        "الرعد: 28": "./audio/ar_rad_28_alafasy.mp3",
-        "الشرح: 6": "./audio/ash_sharh_6_alafasy.mp3",
-        "الطلاق: 2": "./audio/at_talaq_2_alafasy.mp3",
-        "الشعراء: 217": "./audio/ash_shuara_217_alafasy.mp3",
-        "التوبة: 51": "./audio/at_tawbah_51_alafasy.mp3",
-        "الحديد: 4": "./audio/al_hadid_4_alafasy.mp3",
-        "البقرة: 153": "./audio/al_baqarah_153_alafasy.mp3",
-        "التوبة: 40": "./audio/at_tawbah_40_alafasy.mp3",
-        "الطور: 48": "./audio/at_tur_48_alafasy.mp3",
-        "الزمر: 36": "./audio/az_zumar_36_alafasy.mp3",
-        "إبراهيم: 7": "./audio/ibrahim_7_alafasy.mp3",
-        "البقرة: 172": "./audio/al_baqarah_172_alafasy.mp3",
-        "المائدة: 7": "./audio/al_maidah_7_alafasy.mp3",
-        "البقرة: 152": "./audio/al_baqarah_152_alafasy.mp3",
-        "آل عمران: 145": "./audio/al_imran_145_alafasy.mp3",
-        "آل عمران: 139": "./audio/al_imran_139_alafasy.mp3",
-        "يوسف: 87": "./audio/yusuf_87_alafasy.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155_alafasy.mp3",
-        "آل عمران: 134": "./audio/al_imran_134_alafasy.mp3",
-        "الشورى: 37": "./audio/ash_shura_37_alafasy.mp3",
-        "الأعراف: 199": "./audio/al_araf_199_alafasy.mp3",
-        "فصلت: 34": "./audio/fussilat_34_alafasy.mp3",
-        "الشورى: 40": "./audio/ash_shura_40_alafasy.mp3"
-    },
-    "عبد الباسط": {
-        "آل عمران: 159": "./audio/al_imran_159_abdulbasit.mp3",
-        "النجم: 43": "./audio/an_najm_43_abdulbasit.mp3",
-        "الأعراف: 156": "./audio/al_araf_156_abdulbasit.mp3",
-        "يونس: 58": "./audio/yunus_58_abdulbasit.mp3",
-        "الحجر: 87": "./audio/al_hijr_87_abdulbasit.mp3",
-        "الرعد: 28": "./audio/ar_rad_28_abdulbasit.mp3",
-        "الشرح: 6": "./audio/ash_sharh_6_abdulbasit.mp3",
-        "الطلاق: 2": "./audio/at_talaq_2_abdulbasit.mp3",
-        "الشعراء: 217": "./audio/ash_shuara_217_abdulbasit.mp3",
-        "التوبة: 51": "./audio/at_tawbah_51_abdulbasit.mp3",
-        "الحديد: 4": "./audio/al_hadid_4_abdulbasit.mp3",
-        "البقرة: 153": "./audio/al_baqarah_153_abdulbasit.mp3",
-        "التوبة: 40": "./audio/at_tawbah_40_abdulbasit.mp3",
-        "الطور: 48": "./audio/at_tur_48_abdulbasit.mp3",
-        "الزمر: 36": "./audio/az_zumar_36_abdulbasit.mp3",
-        "إبراهيم: 7": "./audio/ibrahim_7_abdulbasit.mp3",
-        "البقرة: 172": "./audio/al_baqarah_172_abdulbasit.mp3",
-        "المائدة: 7": "./audio/al_maidah_7_abdulbasit.mp3",
-        "البقرة: 152": "./audio/al_baqarah_152_abdulbasit.mp3",
-        "آل عمران: 145": "./audio/al_imran_145_abdulbasit.mp3",
-        "آل عمران: 139": "./audio/al_imran_139_abdulbasit.mp3",
-        "يوسف: 87": "./audio/yusuf_87_abdulbasit.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155_abdulbasit.mp3",
-        "آل عمران: 134": "./audio/al_imran_134_abdulbasit.mp3",
-        "الشورى: 37": "./audio/ash_shura_37_abdulbasit.mp3",
-        "الأعراف: 199": "./audio/al_araf_199_abdulbasit.mp3",
-        "فصلت: 34": "./audio/fussilat_34_abdulbasit.mp3",
-        "الشورى: 40": "./audio/ash_shura_40_abdulbasit.mp3"
     }
 };
 
@@ -189,19 +129,35 @@ const playAudioBtn = document.getElementById('play-audio');
 const stopAudioBtn = document.getElementById('stop-audio');
 const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
+const audioProgress = document.getElementById('audio-progress');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
+let audioDuration = 0;
 
-// دالة لتشغيل الصوت
+// دالة لتشغيل الصوت وتحديث شريط التقدم
 function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
         audio.src = audioUrl;
-        audio.play().catch(error => alert('خطأ في تشغيل الصوت، تأكد من وجود الملف في مجلد audio!'));
+        audio.play().then(() => {
+            audioDuration = audio.duration;
+            updateProgress();
+        }).catch(error => alert('خطأ في تشغيل الصوت، تأكد من وجود الملف في مجلد audio!'));
     } else {
         alert('لا يوجد ملف صوتي متاح لهذه الآية، يرجى إضافة الملف في مجلد audio!');
+    }
+}
+
+// دالة لتحديث شريط التقدم
+function updateProgress() {
+    const progress = (audio.currentTime / audioDuration) * 100;
+    audioProgress.style.width = `${progress}%`;
+    if (audio.currentTime < audioDuration) {
+        requestAnimationFrame(updateProgress);
+    } else {
+        audioProgress.style.width = "0";
     }
 }
 
@@ -216,7 +172,7 @@ function displayVerse(verse, mood) {
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
-    verseP.style.borderLeftColor = currentMoodColor; // تغيير لون الشريط الجانبي
+    verseP.style.borderLeftColor = currentMoodColor;
 
     // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
     const reciter = reciterSelect.value;
@@ -250,15 +206,26 @@ playAudioBtn.addEventListener('click', () => {
 // إيقاف الصوت
 stopAudioBtn.addEventListener('click', () => {
     audio.pause();
-    audio.currentTime = 0; // إعادة الصوت إلى البداية
+    audio.currentTime = 0;
+    audioProgress.style.width = "0";
 });
 
-// مشاركة الآية
+// مشاركة الآية مع قائمة منصات التواصل
 shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
     const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [رابط الموقع]`;
     navigator.clipboard.writeText(shareText).then(() => {
-        alert('تم نسخ الآية بنجاح! يمكنك الآن مشاركتها.');
+        // إظهار قائمة منصات التواصل
+        const socialOptions = `
+            <div id="social-menu" style="position: absolute; top: -100px; left: 50%; transform: translateX(-50%); background: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.2); padding: 10px; z-index: 1000;">
+                <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; margin: 5px 0; color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="display: block; margin: 5px 0; color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="display: block; margin: 5px 0; color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', socialOptions);
+        setTimeout(() => document.getElementById('social-menu').remove(), 5000); // إزالة القائمة بعد 5 ثواني
+        alert('تم نسخ الآية! اختر منصة للمشاركة.');
     }).catch(() => {
         alert('فشل في النسخ، يرجى المحاولة يدويًا.');
     });
