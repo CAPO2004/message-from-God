@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رسالة من الله</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -13,19 +13,35 @@
         <h1>رسالة من الله</h1>
         <h2>اختر حالتك</h2>
         <div class="mood-buttons">
-            <button class="mood-btn" data-mood="السعادة">السعادة</button>
-            <button class="mood-btn" data-mood="القلق">القلق</button>
-            <button class="mood-btn" data-mood="الوحدة">الوحدة</button>
-            <button class="mood-btn" data-mood="الشكر">الشكر</button>
-            <button class="mood-btn" data-mood="الحزن">الحزن</button>
-            <button class="mood-btn" data-mood="الغضب">الغضب</button>
+            <button class="mood-btn" data-mood="السعادة">
+                <i class="fas fa-heart"></i> السعادة
+            </button>
+            <button class="mood-btn" data-mood="القلق">
+                <i class="fas fa-exclamation-circle"></i> القلق
+            </button>
+            <button class="mood-btn" data-mood="الوحدة">
+                <i class="fas fa-user-slash"></i> الوحدة
+            </button>
+            <button class="mood-btn" data-mood="الشكر">
+                <i class="fas fa-pray"></i> الشكر
+            </button>
+            <button class="mood-btn" data-mood="الحزن">
+                <i class="fas fa-sad-tear"></i> الحزن
+            </button>
+            <button class="mood-btn" data-mood="الغضب">
+                <i class="fas fa-angry"></i> الغضب
+            </button>
         </div>
 
+        <button id="random-verse-btn">رسالة عشوائية من الله</button>
+
         <div id="result" class="hidden">
-            <h3>اختر القارئ:</h3>
+            <h3>اختر القارئ (اختياري للصوت):</h3>
             <select id="reciter">
                 <option value="ياسر الدوسري">ياسر الدوسري</option>
                 <option value="ناصر القطامي">ناصر القطامي</option>
+                <option value="مشاري العفاسي">مشاري العفاسي</option>
+                <option value="عبد الباسط">عبد الباسط</option>
             </select>
             <p id="verse"></p>
             <button id="play-audio">تشغيل الصوت</button>
@@ -43,7 +59,7 @@
         </div>
     </footer>
 
-    <button class="theme-toggle" onclick="toggleTheme()"><i class="fas fa-sun"></i></button>
+    <button class="theme-toggle"><i class="fas fa-sun"></i></button>
     <script src="script.js"></script>
 </body>
 </html>
