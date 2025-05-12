@@ -155,7 +155,6 @@ function formatTime(seconds) {
 function playAudio(reciter, verseKey) {
     const audioUrl = audioUrls[reciter][verseKey];
     if (audioUrl) {
-        // إيقاف الصوت الحالي وإعادة تعيين الشريط
         audio.pause();
         progressBar.style.width = "0";
         progressThumb.style.left = "-10px";
@@ -163,18 +162,15 @@ function playAudio(reciter, verseKey) {
         durationSpan.textContent = "0:00";
 
         audio.src = audioUrl;
-        audio.load(); // إعادة تحميل الملف
+        audio.load();
         audio.muted = isMuted;
 
-        // الانتظار حتى يتم تحميل البيانات الوصفية للصوت
         audio.addEventListener('loadedmetadata', () => {
-            audio.currentTime = 0; // التأكد من البدء من الصفر
+            audio.currentTime = 0;
             durationSpan.textContent = formatTime(audio.duration);
             audio.play().then(() => {
                 updateProgress();
-            }).catch(() => {
-                // لا رسائل خطأ
-            });
+            }).catch(() => {});
         }, { once: true });
     }
 }
@@ -184,7 +180,7 @@ function updateProgress() {
     if (audio.duration && !audio.paused && !isDragging) {
         const progress = (audio.currentTime / audio.duration) * 100;
         progressBar.style.width = `${progress}%`;
-        progressThumb.style.left = `calc(${progress}% - 10px)`; // تحريك الدائرة
+        progressThumb.style.left = `calc(${progress}% - 10px)`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -193,12 +189,14 @@ function updateProgress() {
 // دالة لتحديث موضع الصوت بناءً على النقر أو السحب
 function updateAudioPosition(clientX) {
     const rect = audioProgress.getBoundingClientRect();
-    const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-    const progressPercent = offsetX / rect.width;
-    audio.currentTime = progressPercent * audio.duration;
-    progressBar.style.width = `${progressPercent * 100}%`;
-    progressThumb.style.left = `calc(${progressPercent * 100}% - 10px)`;
-    currentTimeSpan.textContent = formatTime(audio.currentTime);
+    const offsetX = clientX - rect.left; // حساب المسافة من اليسار بدقة
+    if (offsetX >= 0 && offsetX <= rect.width) {
+        const progressPercent = offsetX / rect.width;
+        audio.currentTime = progressPercent * audio.duration;
+        progressBar.style.width = `${progressPercent * 100}%`;
+        progressThumb.style.left = `calc(${progressPercent * 100}% - 10px)`;
+        currentTimeSpan.textContent = formatTime(audio.currentTime);
+    }
 }
 
 // جعل الخط الزمني تفاعليًا (النقر)
@@ -240,19 +238,16 @@ function displayVerse(verse, mood) {
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
 
-    // تحديث الألوان بناءً على زر الحالة
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
-    // إعادة تعيين الشريط قبل تشغيل الصوت
     progressBar.style.width = "0";
     progressThumb.style.left = "-10px";
     currentTimeSpan.textContent = "0:00";
     durationSpan.textContent = "0:00";
 
-    // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
     const reciter = reciterSelect.value;
     const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
     playAudio(reciter, verseKey);
@@ -274,7 +269,7 @@ randomVerseBtn.addEventListener('click', () => {
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
+// تشغيل الصوت يدويًا
 playAudioBtn.addEventListener('click', () => {
     audio.pause();
     const reciter = reciterSelect.value;
@@ -307,10 +302,10 @@ volumeControlBtn.addEventListener('click', () => {
     volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
 });
 
-// مشاركة الآية مع قائمة منصات التواصل
+// مشاركة الآية
 shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
-    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [https://message-from-god.netlify.app/]`;
+    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [رابط الموقع]`;
     navigator.clipboard.writeText(shareText).then(() => {
         const existingMenu = document.getElementById('social-menu');
         if (existingMenu) existingMenu.remove();
@@ -318,8 +313,8 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
-                <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
         resultDiv.insertAdjacentHTML('beforeend', socialOptions);
