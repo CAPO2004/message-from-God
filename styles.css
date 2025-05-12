@@ -116,6 +116,7 @@ body.dark h2 {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
 }
 
 body.dark #result {
@@ -201,10 +202,10 @@ body.dark #verse {
     background: #ddd;
     border-radius: 2.5px;
     position: relative;
+    overflow: hidden;
 }
 
-#audio-progress::after {
-    content: '';
+#progress-bar {
     position: absolute;
     height: 100%;
     background: #4caf50;
@@ -270,6 +271,30 @@ body.dark #current-time, body.dark #duration {
 #share-verse:hover {
     background: #01579b;
     transform: translateY(-2px);
+}
+
+#social-menu {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 1000;
+}
+
+#social-menu a {
+    display: block;
+    margin: 5px 0;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+#social-menu a i {
+    margin-left: 5px;
 }
 
 .hidden {
@@ -410,6 +435,12 @@ body.dark .theme-toggle i {
         width: 35px;
         height: 35px;
         font-size: 1rem;
+    }
+
+    #social-menu {
+        bottom: 60px;
+        width: 150px;
+        font-size: 0.9rem;
     }
 }
 
