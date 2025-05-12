@@ -157,7 +157,7 @@ function playAudio(reciter, verseKey) {
     if (audioUrl) {
         audio.pause();
         progressBar.style.width = "0";
-        progressThumb.style.left = "-6px";
+        progressThumb.style.left = "-5px";
         currentTimeSpan.textContent = "0:00";
         durationSpan.textContent = "0:00";
 
@@ -180,7 +180,7 @@ function updateProgress() {
     if (audio.duration && !audio.paused && !isDragging) {
         const progressPercent = (audio.currentTime / audio.duration) * 100;
         progressBar.style.width = `${progressPercent}%`;
-        progressThumb.style.left = `calc(${progressPercent}% - 6px)`;
+        progressThumb.style.left = `calc(${progressPercent}% - 5px)`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -193,7 +193,7 @@ function updateAudioPosition(clientX) {
     const progressPercent = offsetX / rect.width;
     audio.currentTime = progressPercent * audio.duration;
     progressBar.style.width = `${progressPercent * 100}%`;
-    progressThumb.style.left = `calc(${progressPercent * 100}% - 6px)`;
+    progressThumb.style.left = `calc(${progressPercent * 100}% - 5px)`;
     currentTimeSpan.textContent = formatTime(audio.currentTime);
 }
 
@@ -244,7 +244,7 @@ function displayVerse(verse, mood) {
     verseP.style.borderLeftColor = currentMoodColor;
 
     progressBar.style.width = "0";
-    progressThumb.style.left = "-6px";
+    progressThumb.style.left = "-5px";
     currentTimeSpan.textContent = "0:00";
     durationSpan.textContent = "0:00";
 
@@ -282,7 +282,7 @@ stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
     progressBar.style.width = "0";
-    progressThumb.style.left = "-6px";
+    progressThumb.style.left = "-5px";
     currentTimeSpan.textContent = "0:00";
 });
 
@@ -290,7 +290,7 @@ stopAudioBtn.addEventListener('click', () => {
 rewindAudioBtn.addEventListener('click', () => {
     audio.currentTime = 0;
     progressBar.style.width = "0";
-    progressThumb.style.left = "-6px";
+    progressThumb.style.left = "-5px";
     currentTimeSpan.textContent = "0:00";
 });
 
@@ -313,7 +313,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[رابط الموقع]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[رابط الموقع]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
