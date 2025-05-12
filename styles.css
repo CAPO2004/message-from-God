@@ -172,8 +172,7 @@ body.dark #verse {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 15px;
-    border-radius: 25px;
+    padding: 5px 0;
     width: 100%;
     max-width: 450px;
 }
@@ -188,8 +187,8 @@ body.dark .audio-timeline {
     font-size: 1.1rem;
     color: #666;
     padding: 0;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     transition: color 0.3s;
 }
 
@@ -209,16 +208,15 @@ body.dark .audio-timeline #volume-control:hover {
 
 #audio-progress {
     flex-grow: 1;
-    height: 5px;
-    background: #d3d3d3;
-    border-radius: 5px;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
     position: relative;
     cursor: pointer;
-    transition: background 0.3s;
 }
 
 body.dark #audio-progress {
-    background: #555;
+    background: #444;
 }
 
 #audio-progress::before {
@@ -227,7 +225,7 @@ body.dark #audio-progress {
     top: 50%;
     left: 0;
     right: 0;
-    height: 12px;
+    height: 8px;
     transform: translateY(-50%);
     background: repeating-linear-gradient(
         to right,
@@ -253,26 +251,26 @@ body.dark #audio-progress::before {
 #progress-bar {
     position: absolute;
     height: 100%;
-    background: #81c784;
+    background: #4caf50;
     width: 0;
-    border-radius: 5px;
+    border-radius: 2px;
     transition: width 0.1s linear;
     z-index: 2;
 }
 
 body.dark #progress-bar {
-    background: #a5d6a7;
+    background: #66bb6a;
 }
 
 #progress-thumb {
     position: absolute;
-    left: -6px;
+    left: -5px;
     top: 50%;
     transform: translateY(-50%);
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    border: 2px solid #4caf50;
+    width: 10px;
+    height: 10px;
+    background: #4caf50;
+    border: 2px solid #388e3c;
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.2s;
@@ -280,8 +278,8 @@ body.dark #progress-bar {
 }
 
 body.dark #progress-thumb {
-    background: #2a3b3a;
-    border-color: #66bb6a;
+    background: #66bb6a;
+    border-color: #2e7d32;
 }
 
 #progress-thumb:hover {
@@ -295,7 +293,7 @@ body.dark #progress-thumb {
 #current-time, #duration {
     font-size: 0.9rem;
     color: #666;
-    min-width: 40px;
+    min-width: 30px;
     text-align: center;
     font-weight: 500;
 }
@@ -523,9 +521,9 @@ body.dark .theme-toggle i {
     }
 
     #progress-thumb {
-        width: 10px;
-        height: 10px;
-        left: -5px;
+        width: 8px;
+        height: 8px;
+        left: -4px;
     }
 }
 
