@@ -63,6 +63,16 @@ body.dark h2 {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
     color: #fff;
     font-family: 'Amiri', serif;
+    width: 150px; /* Unified width */
+    height: 60px; /* Unified height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+.mood-btn i {
+    font-size: 1.2rem;
 }
 
 .mood-btn[data-mood="السعادة"] { background: #6d4c41; }
@@ -77,6 +87,24 @@ body.dark h2 {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
 
+#random-verse-btn {
+    padding: 12px 25px;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.4s, transform 0.4s;
+    font-family: 'Amiri', serif;
+    margin: 20px 0;
+    font-size: 1.1rem;
+}
+
+#random-verse-btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
 #result {
     margin-top: 30px;
     padding: 25px;
@@ -85,6 +113,7 @@ body.dark h2 {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     transition: opacity 0.5s;
     max-width: 600px;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -112,11 +141,24 @@ body.dark #result h3 {
     padding: 10px;
     border-left: 4px solid #6d4c41;
     border-radius: 5px;
+    font-family: 'Cairo', 'Amiri', serif; /* Updated font for Quran verse */
+    animation: fadeIn 1s ease-in-out; /* Fade-in animation */
 }
 
 body.dark #verse {
     color: #f0e8d4;
     border-left-color: #c4a484;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 #play-audio {
@@ -197,16 +239,23 @@ body.dark .social-links a:hover {
     top: 20px;
     left: 20px;
     padding: 12px;
-    background: none;
+    background: #fff;
     border: none;
-    font-size: 1.8rem;
+    border-radius: 50%;
+    font-size: 2rem;
     cursor: pointer;
     color: #f9a825;
-    transition: color 0.5s;
+    transition: color 0.5s, background 0.5s, transform 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 body.dark .theme-toggle {
+    background: #333;
     color: #f0e8d4;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
 }
 
 .theme-toggle i {
@@ -215,4 +264,69 @@ body.dark .theme-toggle {
 
 body.dark .theme-toggle i {
     transform: rotate(180deg);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .mood-btn {
+        width: 130px;
+        height: 55px;
+        font-size: 1rem;
+    }
+
+    #verse {
+        font-size: 1.3rem;
+    }
+
+    #result {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .mood-btn {
+        width: 120px;
+        height: 50px;
+        font-size: 0.9rem;
+    }
+
+    #verse {
+        font-size: 1.2rem;
+    }
+
+    .theme-toggle {
+        font-size: 1.5rem;
+        padding: 8px;
+    }
+
+    #random-verse-btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 80px 40px;
+    }
+
+    .mood-buttons {
+        gap: 30px;
+    }
+
+    #result {
+        max-width: 800px;
+    }
+
+    #verse {
+        font-size: 1.8rem;
+    }
 }
