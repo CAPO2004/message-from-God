@@ -1,63 +1,108 @@
 const verses = {
     "السعادة": [
-        { text: "فَبِمَا رَحْمَةٍ مِنَ اللَّهِ لِنتَ لَهُمْ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانْفَضُّوا مِنْ حَوْلِكَ فَاعْفُ عَنْهُمْ وَاسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِي الْأَمْرِ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ (آل عمران: 159)", surah: 3, ayah: 159 },
-        { text: "وَأَنَّهُ هُوَ أَضْحَكَ وَأَبْكَىٰ (النجم: 43)", surah: 53, ayah: 43 },
-        { text: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)", surah: 7, ayah: 156 },
-        { text: "قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا هُوَ خَيْرٌ مِّمَّا يَجْمَعُونَ (يونس: 58)", surah: 10, ayah: 58 },
-        { text: "وَلَقَدْ آتَيْنَاكَ سَبْعًا مِّنَ الْمَثَانِي وَالْقُرْآنَ الْعَظِيمَ (الحجر: 87)", surah: 15, ayah: 87 }
+        { text: "فَبِمَا رَحْمَةٍ مِنَ اللَّهِ لِنتَ لَهُمْ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانْفَضُّوا مِنْ حَوْلِكَ فَاعْفُ عَنْهُمْ وَاسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِي الْأَمْرِ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ (آل عمران: 159)", audioUrl: "" },
+        { text: "وَأَنَّهُ هُوَ أَضْحَكَ وَأَبْكَىٰ (النجم: 43)", audioUrl: "" },
+        { text: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)", audioUrl: "" },
+        { text: "قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا هُوَ خَيْرٌ مِّمَّا يَجْمَعُونَ (يونس: 58)", audioUrl: "" },
+        { text: "وَلَقَدْ آتَيْنَاكَ سَبْعًا مِّنَ الْمَثَانِي وَالْقُرْآنَ الْعَظِيمَ (الحجر: 87)", audioUrl: "" }
     ],
     "القلق": [
-        { text: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ (الرعد: 28)", surah: 13, ayah: 28 },
-        { text: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا (الشرح: 6)", surah: 94, ayah: 6 },
-        { text: "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا (الطلاق: 2)", surah: 65, ayah: 2 },
-        { text: "وَتَوَكَّلْ عَلَى الْعَزِيزِ الرَّحِيمِ (الشعراء: 217)", surah: 26, ayah: 217 },
-        { text: "قُلْ لَن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ (التوبة: 51)", surah: 9, ayah: 51 }
+        { text: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ (الرعد: 28)", audioUrl: "" },
+        { text: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا (الشرح: 6)", audioUrl: "" },
+        { text: "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا (الطلاق: 2)", audioUrl: "" },
+        { text: "وَتَوَكَّلْ عَلَى الْعَزِيزِ الرَّحِيمِ (الشعراء: 217)", audioUrl: "" },
+        { text: "قُلْ لَن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ (التوبة: 51)", audioUrl: "" }
     ],
     "الوحدة": [
-        { text: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ وَاللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌ (الحديد: 4)", surah: 57, ayah: 4 },
-        { text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ (البقرة: 153)", surah: 2, ayah: 153 },
-        { text: "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)", surah: 9, ayah: 40 },
-        { text: "وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا (الطور: 48)", surah: 52, ayah: 48 },
-        { text: "أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ (الزمر: 36)", surah: 39, ayah: 36 }
+        { text: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ وَاللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌ (الحديد: 4)", audioUrl: "" },
+        { text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ (البقرة: 153)", audioUrl: "" },
+        { text: "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)", audioUrl: "" },
+        { text: "وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا (الطور: 48)", audioUrl: "" },
+        { text: "أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ (الزمر: 36)", audioUrl: "" }
     ],
     "الشكر": [
-        { text: "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ (إبراهيم: 7)", surah: 14, ayah: 7 },
-        { text: "فَكُلُوا مِمَّا رَزَقَكُمُ اللَّهُ حَلَالًا طَيِّبًا وَاشْكُرُوا نِعْمَتَ اللَّهِ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ (البقرة: 172)", surah: 2, ayah: 172 },
-        { text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ (المائدة: 7)", surah: 5, ayah: 7 },
-        { text: "فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ (البقرة: 152)", surah: 2, ayah: 152 },
-        { text: "وَسَنَجْزِي الشَّاكِرِينَ (آل عمران: 145)", surah: 3, ayah: 145 }
+        { text: "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ (إبراهيم: 7)", audioUrl: "" },
+        { text: "فَكُلُوا مِمَّا رَزَقَكُمُ اللَّهُ حَلَالًا طَيِّبًا وَاشْكُرُوا نِعْمَتَ اللَّهِ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ (البقرة: 172)", audioUrl: "" },
+        { text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ (المائدة: 7)", audioUrl: "" },
+        { text: "فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ (البقرة: 152)", audioUrl: "" },
+        { text: "وَسَنَجْزِي الشَّاكِرِينَ (آل عمران: 145)", audioUrl: "" }
     ],
     "الحزن": [
-        { text: "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)", surah: 9, ayah: 40 },
-        { text: "وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ (آل عمران: 139)", surah: 3, ayah: 139 },
-        { text: "وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ (يوسف: 87)", surah: 12, ayah: 87 },
-        { text: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)", surah: 7, ayah: 156 },
-        { text: "وَبَشِّرِ الصَّابِرِينَ (البقرة: 155)", surah: 2, ayah: 155 }
+        { text: "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)", audioUrl: "" },
+        { text: "وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ (آل عمران: 139)", audioUrl: "" },
+        { text: "وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ (يوسف: 87)", audioUrl: "" },
+        { text: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)", audioUrl: "" },
+        { text: "وَبَشِّرِ الصَّابِرِينَ (البقرة: 155)", audioUrl: "" }
     ],
     "الغضب": [
-        { text: "الَّذِينَ يُنفِقُونَ فِي السَّرَّاءِ وَالضَّرَّاءِ وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ (آل عمران: 134)", surah: 3, ayah: 134 },
-        { text: "وَإِذَا مَا غَضِبُوا هُمْ يَغْفِرُونَ (الشورى: 37)", surah: 42, ayah: 37 },
-        { text: "خُذِ الْعَفْوَ وَأْمُرْ بِالْعُرْفِ وَأَعْرِضْ عَنِ الْجَاهِلِينَ (الأعراف: 199)", surah: 7, ayah: 199 },
-        { text: "وَلَا تَسْتَوِي الْحَسَنَةُ وَلَا السَّيِّئَةُ ادْفَعْ بِالَّتِي هِيَ أَحْسَنُ فَإِذَا الَّذِي بَيْنَكَ وَبَيْنَهُ عَدَاوَةٌ كَأَنَّهُ وَلِيٌّ حَمِيمٌ (فصلت: 34)", surah: 41, ayah: 34 },
-        { text: "وَجَزَاءُ سَيِّئَةٍ سَيِّئَةٌ مِّثْلُهَا فَمَنْ عَفَا وَأَصْلَحَ فَأَجْرُهُ عَلَى اللَّهِ إِنَّهُ لَا يُحِبُّ الظَّالِمِينَ (الشورى: 40)", surah: 42, ayah: 40 }
+        { text: "الَّذِينَ يُنفِقُونَ فِي السَّرَّاءِ وَالضَّرَّاءِ وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ (آل عمران: 134)", audioUrl: "" },
+        { text: "وَإِذَا مَا غَضِبُوا هُمْ يَغْفِرُونَ (الشورى: 37)", audioUrl: "" },
+        { text: "خُذِ الْعَفْوَ وَأْمُرْ بِالْعُرْفِ وَأَعْرِضْ عَنِ الْجَاهِلِينَ (الأعراف: 199)", audioUrl: "" },
+        { text: "وَلَا تَسْتَوِي الْحَسَنَةُ وَلَا السَّيِّئَةُ ادْفَعْ بِالَّتِي هِيَ أَحْسَنُ فَإِذَا الَّذِي بَيْنَكَ وَبَيْنَهُ عَدَاوَةٌ كَأَنَّهُ وَلِيٌّ حَمِيمٌ (فصلت: 34)", audioUrl: "" },
+        { text: "وَجَزَاءُ سَيِّئَةٍ سَيِّئَةٌ مِّثْلُهَا فَمَنْ عَفَا وَأَصْلَحَ فَأَجْرُهُ عَلَى اللَّهِ إِنَّهُ لَا يُحِبُّ الظَّالِمِينَ (الشورى: 40)", audioUrl: "" }
     ]
 };
 
-// الروابط المحلية لخانة الحزن فقط
-const localAudioUrls = {
+const audioUrls = {
     "ياسر الدوسري": {
+        "آل عمران: 159": "./audio/al_imran_159.mp3",
+        "النجم: 43": "./audio/an_najm_43.mp3",
+        "الأعراف: 156": "./audio/al_araf_156.mp3",
+        "يونس: 58": "./audio/yunus_58.mp3",
+        "الحجر: 87": "./audio/al_hijr_87.mp3",
+        "الرعد: 28": "./audio/ar_rad_28.mp3",
+        "الشرح: 6": "./audio/ash_sharh_6.mp3",
+        "الطلاق: 2": "./audio/at_talaq_2.mp3",
+        "الشعراء: 217": "./audio/ash_shuara_217.mp3",
+        "التوبة: 51": "./audio/at_tawbah_51.mp3",
+        "الحديد: 4": "./audio/al_hadid_4.mp3",
+        "البقرة: 153": "./audio/al_baqarah_153.mp3",
         "التوبة: 40": "./audio/at_tawbah_40.mp3",
+        "الطور: 48": "./audio/at_tur_48.mp3",
+        "الزمر: 36": "./audio/az_zumar_36.mp3",
+        "إبراهيم: 7": "./audio/ibrahim_7.mp3",
+        "البقرة: 172": "./audio/al_baqarah_172.mp3",
+        "المائدة: 7": "./audio/al_maidah_7.mp3",
+        "البقرة: 152": "./audio/al_baqarah_152.mp3",
+        "آل عمران: 145": "./audio/al_imran_145.mp3",
         "آل عمران: 139": "./audio/al_imran_139.mp3",
         "يوسف: 87": "./audio/yusuf_87.mp3",
-        "الأعراف: 156": "./audio/al_araf_156.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155.mp3"
+        "البقرة: 155": "./audio/al_baqarah_155.mp3",
+        "آل عمران: 134": "./audio/al_imran_134.mp3",
+        "الشورى: 37": "./audio/ash_shura_37.mp3",
+        "الأعراف: 199": "./audio/al_araf_199.mp3",
+        "فصلت: 34": "./audio/fussilat_34.mp3",
+        "الشورى: 40": "./audio/ash_shura_40.mp3"
     },
     "ناصر القطامي": {
+        "آل عمران: 159": "./audio/al_imran_159_qatami.mp3",
+        "النجم: 43": "./audio/an_najm_43_qatami.mp3",
+        "الأعراف: 156": "./audio/al_araf_156_qatami.mp3",
+        "يونس: 58": "./audio/yunus_58_qatami.mp3",
+        "الحجر: 87": "./audio/al_hijr_87_qatami.mp3",
+        "الرعد: 28": "./audio/ar_rad_28_qatami.mp3",
+        "الشرح: 6": "./audio/ash_sharh_6_qatami.mp3",
+        "الطلاق: 2": "./audio/at_talaq_2_qatami.mp3",
+        "الشعراء: 217": "./audio/ash_shuara_217_qatami.mp3",
+        "التوبة: 51": "./audio/at_tawbah_51_qatami.mp3",
+        "الحديد: 4": "./audio/al_hadid_4_qatami.mp3",
+        "البقرة: 153": "./audio/al_baqarah_153_qatami.mp3",
         "التوبة: 40": "./audio/at_tawbah_40_qatami.mp3",
+        "الطور: 48": "./audio/at_tur_48_qatami.mp3",
+        "الزمر: 36": "./audio/az_zumar_36_qatami.mp3",
+        "إبراهيم: 7": "./audio/ibrahim_7_qatami.mp3",
+        "البقرة: 172": "./audio/al_baqarah_172_qatami.mp3",
+        "المائدة: 7": "./audio/al_maidah_7_qatami.mp3",
+        "البقرة: 152": "./audio/al_baqarah_152_qatami.mp3",
+        "آل عمران: 145": "./audio/al_imran_145_qatami.mp3",
         "آل عمران: 139": "./audio/al_imran_139_qatami.mp3",
         "يوسف: 87": "./audio/yusuf_87_qatami.mp3",
-        "الأعراف: 156": "./audio/al_araf_156_qatami.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155_qatami.mp3"
+        "البقرة: 155": "./audio/al_baqarah_155_qatami.mp3",
+        "آل عمران: 134": "./audio/al_imran_134_qatami.mp3",
+        "الشورى: 37": "./audio/ash_shura_37_qatami.mp3",
+        "الأعراف: 199": "./audio/al_araf_199_qatami.mp3",
+        "فصلت: 34": "./audio/fussilat_34_qatami.mp3",
+        "الشورى: 40": "./audio/ash_shura_40_qatami.mp3"
     }
 };
 
@@ -72,7 +117,7 @@ const moodColors = {
     "الشكر": "#f9a825",
     "الحزن": "#5e35b1",
     "الغضب": "#d32f2f",
-    "random": "#4caf50"
+    "random": "#4caf50" // لون زر الرسالة العشوائية
 };
 
 const moodButtons = document.querySelectorAll('.mood-btn');
@@ -86,7 +131,7 @@ const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
 const audioProgress = document.getElementById('audio-progress');
 const progressBar = document.getElementById('progress-bar');
-const progressThumb = document.getElementSystem: * Today's date and time is 04:16 PM EEST on Friday, May 16, 2025. *Id('progress-thumb');
+const progressThumb = document.getElementById('progress-thumb');
 const currentTimeSpan = document.getElementById('current-time');
 const durationSpan = document.getElementById('duration');
 const rewindAudioBtn = document.getElementById('rewind-audio');
@@ -94,7 +139,7 @@ const volumeControlBtn = document.getElementById('volume-control');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
-let currentMoodColor = "#6d4c41";
+let currentMoodColor = "#6d4c41"; // اللون الافتراضي
 let isMuted = false;
 let isDragging = false;
 
@@ -105,51 +150,23 @@ function formatTime(seconds) {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// دالة لتوليد رابط الصوت من Everyayah
-function getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder) {
-    const formattedSurah = String(surahNumber).padStart(3, '0');
-    const formattedAyah = String(ayahNumber).padStart(3, '0');
-    return `https://everyayah.com/data/${reciterFolder}/${formattedSurah}${formattedAyah}.mp3`;
-}
-
 // دالة لتشغيل الصوت
-function playAudio(reciter, verseKey, mood, surah, ayah) {
-    let audioUrl;
-
-    // إذا كانت الحالة "الحزن"، نستخدم الروابط المحلية
-    if (mood === "الحزن" && localAudioUrls[reciter] && localAudioUrls[reciter][verseKey]) {
-        audioUrl = localAudioUrls[reciter][verseKey];
-        console.log(`Using local URL for ${verseKey}: ${audioUrl}`);
-    } else {
-        // استخدام Everyayah للحالات الأخرى
-        const reciterFolder = reciter === "ياسر الدوسري" ? "Yasser_Dosari_64kbps" : "AbdulSamad_64kbps_QuranExplorer.Com";
-        audioUrl = getEveryayahAudioUrl(surah, ayah, reciterFolder);
-        console.log(`Using Everyayah URL for ${verseKey}: ${audioUrl}`);
-    }
-
+function playAudio(reciter, verseKey, customAudioUrl) {
+    let audioUrl = customAudioUrl || audioUrls[reciter][verseKey];
     if (audioUrl) {
+        // إعادة تعيين الشريط والزمن قبل التشغيل
         progressBar.style.width = "0";
-        progressThumb.style.left = "-8px";
         currentTimeSpan.textContent = "0:00";
         audio.src = audioUrl;
-        audio.load();
+        audio.load(); // إعادة تحميل الملف لضمان البدء من الصفر
         audio.muted = isMuted;
-        audio.currentTime = 0;
-
-        audio.addEventListener('loadedmetadata', () => {
+        audio.currentTime = 0; // التأكد من بدء الصوت من الصفر
+        audio.play().then(() => {
             durationSpan.textContent = formatTime(audio.duration || 0);
-            audio.play().then(() => {
-                updateProgress();
-            }).catch((error) => {
-                console.error(`Error playing audio: ${error}`);
-                alert("تعذر تشغيل الصوت. قد تكون هناك مشكلة في الرابط أو إعدادات المتصفح.");
-            });
-        }, { once: true });
-
-        audio.addEventListener('error', (e) => {
-            console.error(`Audio error for ${audioUrl}:`, e);
-            alert("فشل في تحميل الصوت. تحقق من الرابط أو إعدادات المتصفح.");
-        }, { once: true });
+            updateProgress();
+        }).catch(() => {
+            // لا رسائل خطأ
+        });
     }
 }
 
@@ -157,8 +174,8 @@ function playAudio(reciter, verseKey, mood, surah, ayah) {
 function updateProgress() {
     if (audio.duration && !audio.paused && !isDragging) {
         const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${progress}%`;
-        progressThumb.style.left = `calc(${progress}% - 8px)`;
+        progressBar.style.width = `${progress}%`; // تحديث الشريط بنسبة التقدم
+        progressThumb.style.left = `calc(${progress}% - 8px)`; // تحريك الدائرة مع الشريط
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -171,7 +188,7 @@ function updateAudioPosition(clientX) {
     const progressPercent = offsetX / rect.width;
     audio.currentTime = progressPercent * audio.duration;
     progressBar.style.width = `${progressPercent * 100}%`;
-    progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`;
+    progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`; // تحريك الدائرة بدقة
     currentTimeSpan.textContent = formatTime(audio.currentTime);
 }
 
@@ -179,7 +196,7 @@ function updateAudioPosition(clientX) {
 audioProgress.addEventListener('click', (e) => {
     if (audio.duration) {
         updateAudioPosition(e.clientX);
-        if (audio.paused) audio.play();
+        if (audio.paused) audio.play(); // استئناف التشغيل إذا كان متوقفًا
         updateProgress();
     }
 });
@@ -187,8 +204,8 @@ audioProgress.addEventListener('click', (e) => {
 // جعل الدائرة قابلة للسحب
 progressThumb.addEventListener('mousedown', (e) => {
     isDragging = true;
-    audio.pause();
-    e.preventDefault();
+    audio.pause(); // إيقاف الصوت مؤقتًا أثناء السحب
+    e.preventDefault(); // منع السلوك الافتراضي
 });
 
 document.addEventListener('mousemove', (e) => {
@@ -201,31 +218,35 @@ document.addEventListener('mouseup', () => {
     if (isDragging) {
         isDragging = false;
         if (!audio.paused) {
-            audio.play();
+            audio.play(); // استئناف التشغيل بعد السحب
             updateProgress();
         }
     }
 });
 
-// دالة لعرض الآية وتشغيل الصوت تلقائيًا
-function displayVerse(verseData, mood) {
-    verseP.textContent = verseData.text;
-    currentVerse = verseData.text;
+// دالة لعرض الآية وتحديث الألوان وتشغيل الصوت تلقائيًا
+function displayVerse(verse, mood) {
+    verseP.textContent = verse;
+    currentVerse = verse;
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
 
+    // تحديث الألوان بناءً على زر الحالة
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
+    // إعادة تعيين الشريط قبل تشغيل الصوت
     progressBar.style.width = "0";
     progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
 
+    // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
     const reciter = reciterSelect.value;
     const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-    playAudio(reciter, verseKey, mood, verseData.surah, verseData.ayah);
+    const verseObj = allVerses.find(v => v.text === verse);
+    playAudio(reciter, verseKey, verseObj ? verseObj.audioUrl : "");
 }
 
 // التعامل مع أزرار الحالة
@@ -246,12 +267,11 @@ randomVerseBtn.addEventListener('click', () => {
 
 // تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
 playAudioBtn.addEventListener('click', () => {
-    audio.pause();
+    audio.pause(); // إيقاف الصوت الحالي
     const reciter = reciterSelect.value;
     const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-    const verseData = allVerses.find(v => v.text === currentVerse);
-    const mood = Object.keys(verses).find(key => verses[key].some(v => v.text === currentVerse)) || "random";
-    playAudio(reciter, verseKey, mood, verseData.surah, verseData.ayah);
+    const verseObj = allVerses.find(v => v.text === currentVerse);
+    playAudio(reciter, verseKey, verseObj ? verseObj.audioUrl : "");
 });
 
 // إيقاف الصوت
@@ -279,14 +299,16 @@ volumeControlBtn.addEventListener('click', () => {
     volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
 });
 
-// مشاركة الآية
+// مشاركة الآية مع قائمة منصات التواصل
 shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
     const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [https://message-from-god.netlify.app/]`;
     navigator.clipboard.writeText(shareText).then(() => {
+        // إزالة أي قائمة سابقة
         const existingMenu = document.getElementById('social-menu');
         if (existingMenu) existingMenu.remove();
 
+        // إظهار قائمة منصات التواصل
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
@@ -298,7 +320,7 @@ shareVerseBtn.addEventListener('click', () => {
         setTimeout(() => {
             const menu = document.getElementById('social-menu');
             if (menu) menu.remove();
-        }, 5000);
+        }, 5000); // إزالة القائمة بعد 5 ثواني
         alert('تم نسخ الآية! اختر منصة للمشاركة.');
     }).catch(() => {
         alert('فشل في النسخ، يرجى المحاولة يدويًا.');
