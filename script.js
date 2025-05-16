@@ -148,7 +148,7 @@ const customAudioLinks = {
         "الشرح: 6": "https://everyayah.com/data/Nasser_Alqatami_128kbps/094006.mp3",
         "الطلاق: 2": "",
         "الشعراء: 217": "https://everyayah.com/data/Nasser_Alqatami_128kbps/026217.mp3",
-        "التوبة: 51": "",
+        "التوبة: 51": "https://everyayah.com/data/Nasser_Alqatami_128kbps/009051.mp3",
         "الحديد: 4": "",
         "البقرة: 153": "https://everyayah.com/data/Nasser_Alqatami_128kbps/002153.mp3",
         "التوبة: 40": "https://everyayah.com/data/Nasser_Alqatami_128kbps/009051.mp3",
