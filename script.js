@@ -1,202 +1,58 @@
-const verses = {
-    "السعادة": [
-        "فَبِمَا رَحْمَةٍ مِنَ اللَّهِ لِنتَ لَهُمْ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانْفَضُّوا مِنْ حَوْلِكَ فَاعْفُ عَنْهُمْ وَاسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِي الْأَمْرِ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ (آل عمران: 159)",
-        "وَأَنَّهُ هُوَ أَضْحَكَ وَأَبْكَىٰ (النجم: 43)",
-        "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)",
-        "قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا هُوَ خَيْرٌ مِّمَّا يَجْمَعُونَ (يونس: 58)",
-        "وَلَقَدْ آتَيْنَاكَ سَبْعًا مِّنَ الْمَثَانِي وَالْقُرْآنَ الْعَظِيمَ (الحجر: 87)"
-    ],
-    "القلق": [
-        "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ (الرعد: 28)",
-        "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا (الشرح: 6)",
-        "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا (الطلاق: 2)",
-        "وَتَوَكَّلْ عَلَى الْعَزِيزِ الرَّحِيمِ (الشعراء: 217)",
-        "قُلْ لَن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ (التوبة: 51)"
-    ],
-    "الوحدة": [
-        "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ وَاللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌ (الحديد: 4)",
-        "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ (البقرة: 153)",
-        "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)",
-        "وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا (الطور: 48)",
-        "أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ (الزمر: 36)"
-    ],
-    "الشكر": [
-        "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ (إبراهيم: 7)",
-        "فَكُلُوا مِمَّا رَزَقَكُمُ اللَّهُ حَلَالًا طَيِّبًا وَاشْكُرُوا نِعْمَتَ اللَّهِ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ (البقرة: 172)",
-        "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ (المائدة: 7)",
-        "فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ (البقرة: 152)",
-        "وَسَنَجْزِي الشَّاكِرِينَ (آل عمران: 145)"
-    ],
-    "الحزن": [
-        "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)",
-        "وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ (آل عمران: 139)",
-        "وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ (يوسف: 87)",
-        "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)",
-        "وَبَشِّرِ الصَّابِرِينَ (البقرة: 155)"
-    ],
-    "الغضب": [
-        "الَّذِينَ يُنفِقُونَ فِي السَّرَّاءِ وَالضَّرَّاءِ وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ (آل عمران: 134)",
-        "وَإِذَا مَا غَضِبُوا هُمْ يَغْفِرُونَ (الشورى: 37)",
-        "خُذِ الْعَفْوَ وَأْمُرْ بِالْعُرْفِ وَأَعْرِضْ عَنِ الْجَاهِلِينَ (الأعراف: 199)",
-        "وَلَا تَسْتَوِي الْحَسَنَةُ وَلَا السَّيِّئَةُ ادْفَعْ بِالَّتِي هِيَ أَحْسَنُ فَإِذَا الَّذِي بَيْنَكَ وَبَيْنَهُ عَدَاوَةٌ كَأَنَّهُ وَلِيٌّ حَمِيمٌ (فصلت: 34)",
-        "وَجَزَاءُ سَيِّئَةٍ سَيِّئَةٌ مِّثْلُهَا فَمَنْ عَفَا وَأَصْلَحَ فَأَجْرُهُ عَلَى اللَّهِ إِنَّهُ لَا يُحِبُّ الظَّالِمِينَ (الشورى: 40)"
-    ]
-};
-
-// --- بداية التعديلات لدمج Everyayah ---
-
-// قاموس لربط أسماء السور بأرقامها (يمكن توسيعه حسب الحاجة)
-const surahNameToNumber = {
-    "الفاتحة": 1,
-    "البقرة": 2,
-    "آل عمران": 3,
-    "النساء": 4,
-    "المائدة": 5,
-    "الأنعام": 6,
-    "الأعراف": 7,
-    "الأنفال": 8,
-    "التوبة": 9,
-    "يونس": 10,
-    "هود": 11,
-    "يوسف": 12,
-    "الرعد": 13,
-    "إبراهيم": 14,
-    "الحجر": 15,
-    "النحل": 16,
-    "الإسراء": 17,
-    "الكهف": 18,
-    "مريم": 19,
-    "طه": 20,
-    "الأنبياء": 21,
-    "الحج": 22,
-    "المؤمنون": 23,
-    "النور": 24,
-    "الفرقان": 25,
-    "الشعراء": 26,
-    "النمل": 27,
-    "القصص": 28,
-    "العنكبوت": 29,
-    "الروم": 30,
-    "لقمان": 31,
-    "السجدة": 32,
-    "الأحزاب": 33,
-    "سبأ": 34,
-    "فاطر": 35,
-    "يس": 36,
-    "الصافات": 37,
-    "ص": 38,
-    "الزمر": 39,
-    "غافر": 40,
-    "فصلت": 41,
-    "الشورى": 42,
-    "الزخرف": 43,
-    "الدخان": 44,
-    "الجاثية": 45,
-    "الأحقاف": 46,
-    "محمد": 47,
-    "الفتح": 48,
-    "الحجرات": 49,
-    "ق": 50,
-    "الذاريات": 51,
-    "الطور": 52,
-    "النجم": 53,
-    "القمر": 54,
-    "الرحمن": 55,
-    "الواقعة": 56,
-    "الحديد": 57,
-    "المجادلة": 58,
-    "الحشر": 59,
-    "الممتحنة": 60,
-    "الصف": 61,
-    "الجمعة": 62,
-    "المنافقون": 63,
-    "التغابن": 64,
-    "الطلاق": 65,
-    "التحريم": 66,
-    "الملك": 67,
-    "القلم": 68,
-    "الحاقة": 69,
-    "المعارج": 70,
-    "نوح": 71,
-    "الجن": 72,
-    "المزمل": 73,
-    "المدثر": 74,
-    "القيامة": 75,
-    "الإنسان": 76,
-    "المرسلات": 77,
-    "النبأ": 78,
-    "النازعات": 79,
-    "عبس": 80,
-    "التكوير": 81,
-    "الإنفطار": 82,
-    "المطففين": 83,
-    "الإنشقاق": 84,
-    "البروج": 85,
-    "الطارق": 86,
-    "الأعلى": 87,
-    "الغاشية": 88,
-    "الفجر": 89,
-    "البلد": 90,
-    "الشمس": 91,
-    "الليل": 92,
-    "الضحى": 93,
-    "الشرح": 94,
-    "التين": 95,
-    "العلق": 96,
-    "القدر": 97,
-    "البينة": 98,
-    "الزلزلة": 99,
-    "العاديات": 100,
-    "القارعة": 101,
-    "التكاثر": 102,
-    "العصر": 103,
-    "الهمزة": 104,
-    "الفيل": 105,
-    "قريش": 106,
-    "الماعون": 107,
-    "الكوثر": 108,
-    "الكافرون": 109,
-    "النصر": 110,
-    "المسد": 111,
-    "الإخلاص": 112,
-    "الفلق": 113,
-    "الناس": 114
-};
-
-// قاموس لربط اسم القارئ المعروض في القائمة المنسدلة باسم المجلد على Everyayah
-const reciterFolderNames = {
-    "ياسر الدوسري": "Yasser_Ad-Dussary_128kbps", // مثال، قد تحتاج لتأكيد اسم المجلد الصحيح
-    "ناصر القطامي": "Nasser_Alqatami_128kbps" // مثال، قد تحتاج لتأكيد اسم المجلد الصحيح
-    // يمكنك إضافة المزيد من القراء هنا
-};
+// تعريف المتغير لاسم مجلد القارئ (قابل للتعديل)
+const DEFAULT_RECITER_FOLDER = "Alafasy_64kbps"; // مشاري راشد العفاسي كقيمة افتراضية
 
 // دالة لتوليد رابط الصوت من Everyayah
-function getEveryayahAudioUrl(reciterFolderName, surahNumber, ayahNumber) {
-    if (!reciterFolderName || !surahNumber || !ayahNumber) {
-        console.error("معلومات غير كافية لتوليد رابط الصوت من Everyayah", reciterFolderName, surahNumber, ayahNumber);
-        return null;
-    }
+function getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder = DEFAULT_RECITER_FOLDER) {
     const formattedSurah = String(surahNumber).padStart(3, '0');
     const formattedAyah = String(ayahNumber).padStart(3, '0');
-    return `https://everyayah.com/data/${reciterFolderName}/${formattedSurah}${formattedAyah}.mp3`;
+    return `https://everyayah.com/data/${reciterFolder}/${formattedSurah}${formattedAyah}.mp3`;
 }
 
-// دالة لاستخراج اسم السورة ورقم الآية من نص الآية الكامل
-function parseVerseInfo(verseText) {
-    const match = verseText.match(/\(([^:]+):\s*(\d+)\)/);
-    if (match && match[2] && match[3]) {
-        const surahName = match[2].trim();
-        const ayahNumber = parseInt(match[3], 10);
-        const surahNumber = surahNameToNumber[surahName];
-        if (surahNumber) {
-            return { surahName, ayahNumber, surahNumber };
-        }
-    }
-    console.warn("لم يتمكن من استخراج معلومات السورة والآية من: ", verseText);
-    return null;
-}
-
-// --- نهاية التعديلات لدمج Everyayah ---
+// قائمة الآيات مع أرقام السور والآيات
+const verses = {
+    "السعادة": [
+        { text: "فَبِمَا رَحْمَةٍ مِنَ اللَّهِ لِنتَ لَهُمْ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانْفَضُّوا مِنْ حَوْلِكَ فَاعْفُ عَنْهُمْ وَاسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِي الْأَمْرِ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ (آل عمران: 159)", surah: 3, ayah: 159 },
+        { text: "وَأَنَّهُ هُوَ أَضْحَكَ وَأَبْكَىٰ (النجم: 43)", surah: 53, ayah: 43 },
+        { text: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)", surah: 7, ayah: 156 },
+        { text: "قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا هُوَ خَيْرٌ مِّمَّا يَجْمَعُونَ (يونس: 58)", surah: 10, ayah: 58 },
+        { text: "وَلَقَدْ آتَيْنَاكَ سَبْعًا مِّنَ الْمَثَانِي وَالْقُرْآنَ الْعَظِيمَ (الحجر: 87)", surah: 15, ayah: 87 }
+    ],
+    "القلق": [
+        { text: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ (الرعد: 28)", surah: 13, ayah: 28 },
+        { text: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا (الشرح: 6)", surah: 94, ayah: 6 },
+        { text: "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا (الطلاق: 2)", surah: 65, ayah: 2 },
+        { text: "وَتَوَكَّلْ عَلَى الْعَزِيزِ الرَّحِيمِ (الشعراء: 217)", surah: 26, ayah: 217 },
+        { text: "قُلْ لَن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ (التوبة: 51)", surah: 9, ayah: 51 }
+    ],
+    "الوحدة": [
+        { text: "وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ وَاللَّهُ بِمَا تَعْمَلُونَ بَصِيرٌ (الحديد: 4)", surah: 57, ayah: 4 },
+        { text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ (البقرة: 153)", surah: 2, ayah: 153 },
+        { text: "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)", surah: 9, ayah: 40 },
+        { text: "وَاصْبِرْ لِحُكْمِ رَبِّكَ فَإِنَّكَ بِأَعْيُنِنَا (الطور: 48)", surah: 52, ayah: 48 },
+        { text: "أَلَيْسَ اللَّهُ بِكَافٍ عَبْدَهُ (الزمر: 36)", surah: 39, ayah: 36 }
+    ],
+    "الشكر": [
+        { text: "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ وَلَئِن كَفَرْتُمْ إِنَّ عَذَابِي لَشَدِيدٌ (إبراهيم: 7)", surah: 14, ayah: 7 },
+        { text: "فَكُلُوا مِمَّا رَزَقَكُمُ اللَّهُ حَلَالًا طَيِّبًا وَاشْكُرُوا نِعْمَتَ اللَّهِ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ (البقرة: 172)", surah: 2, ayah: 172 },
+        { text: "يَا أَيُّهَا الَّذِينَ آمَنُوا اذْكُرُوا نِعْمَتَ اللَّهِ عَلَيْكُمْ (المائدة: 7)", surah: 5, ayah: 7 },
+        { text: "فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ (البقرة: 152)", surah: 2, ayah: 152 },
+        { text: "وَسَنَجْزِي الشَّاكِرِينَ (آل عمران: 145)", surah: 3, ayah: 145 }
+    ],
+    "الحزن": [
+        { text: "إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا (التوبة: 40)", surah: 9, ayah: 40 },
+        { text: "وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنتُمُ الْأَعْلَوْنَ إِن كُنتُم مُّؤْمِنِينَ (آل عمران: 139)", surah: 3, ayah: 139 },
+        { text: "وَلَا تَيْأَسُوا مِن رَّوْحِ اللَّهِ إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ (يوسف: 87)", surah: 12, ayah: 87 },
+        { text: "وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ فَسَأَكْتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤْتُونَ الزَّكَاةَ وَالَّذِينَ هُمْ بِآيَاتِنَا يُؤْمِنُونَ (الأعراف: 156)", surah: 7, ayah: 156 },
+        { text: "وَبَشِّرِ الصَّابِرِينَ (البقرة: 155)", surah: 2, ayah: 155 }
+    ],
+    "الغضب": [
+        { text: "الَّذِينَ يُنفِقُونَ فِي السَّرَّاءِ وَالضَّرَّاءِ وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ وَاللَّهُ يُحِبُّ الْمُحْسِنِينَ (آل عمران: 134)", surah: 3, ayah: 134 },
+        { text: "وَإِذَا مَا غَضِبُوا هُمْ يَغْفِرُونَ (الشورى: 37)", surah: 42, ayah: 37 },
+        { text: "خُذِ الْعَفْوَ وَأْمُرْ بِالْعُرْفِ وَأَعْرِضْ عَنِ الْجَاهِلِينَ (الأعراف: 199)", surah: 7, ayah: 199 },
+        { text: "وَلَا تَسْتَوِي الْحَسَنَةُ وَلَا السَّيِّئَةُ ادْفَعْ بِالَّتِي هِيَ أَحْسَنُ فَإِذَا الَّذِي بَيْنَكَ وَبَيْنَهُ عَدَاوَةٌ كَأَنَّهُ وَلِيٌّ حَمِيمٌ (فصلت: 34)", surah: 41, ayah: 34 },
+        { text: "وَجَزَاءُ سَيِّئَةٍ سَيِّئَةٌ مِّثْلُهَا فَمَنْ عَفَا وَأَصْلَحَ فَأَجْرُهُ عَلَى اللَّهِ إِنَّهُ لَا يُحِبُّ الظَّالِمِينَ (الشورى: 40)", surah: 42, ayah: 40 }
+    ]
+};
 
 // جمع كل الآيات في مصفوفة واحدة للاختيار العشوائي
 const allVerses = Object.values(verses).flat();
@@ -230,7 +86,7 @@ const rewindAudioBtn = document.getElementById('rewind-audio');
 const volumeControlBtn = document.getElementById('volume-control');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
-let currentVerseInfo = null; // لتخزين معلومات الآية الحالية (بما في ذلك رقم السورة والآية)
+let currentVerse = "";
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
 let isMuted = false;
 let isDragging = false;
@@ -242,42 +98,28 @@ function formatTime(seconds) {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// دالة لتشغيل الصوت (معدلة لاستخدام Everyayah)
-function playCurrentVerseAudio() {
-    if (!currentVerseInfo || !currentVerseInfo.surahNumber || !currentVerseInfo.ayahNumber) {
-        // console.log("لا توجد معلومات آية حالية لتشغيل الصوت.");
-        return;
-    }
-
-    const selectedReciterName = reciterSelect.value;
-    const reciterFolderName = reciterFolderNames[selectedReciterName];
-
-    if (!reciterFolderName) {
-        // console.error(`لم يتم العثور على اسم مجلد للقارئ: ${selectedReciterName}`);
-        return;
-    }
-
-    const audioUrl = getEveryayahAudioUrl(reciterFolderName, currentVerseInfo.surahNumber, currentVerseInfo.ayahNumber);
-    
+// دالة لتشغيل الصوت
+function playAudio(surahNumber, ayahNumber) {
+    const reciterFolder = reciterSelect.value === "ياسر الدوسري" ? "Yasser_Dosari_64kbps" : "Nasser_Alqatami_64kbps";
+    const audioUrl = getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder);
     if (audioUrl) {
+        audio.pause();
         progressBar.style.width = "0";
         progressThumb.style.left = "-8px";
         currentTimeSpan.textContent = "0:00";
-        durationSpan.textContent = "0:00"; // إعادة تعيين المدة
+        durationSpan.textContent = "0:00";
+
         audio.src = audioUrl;
-        audio.load(); 
+        audio.load();
         audio.muted = isMuted;
-        // audio.currentTime = 0; // تم إزالتها لأن load() يجب أن تعيد التعيين
-        audio.play().then(() => {
+        audio.currentTime = 0;
+
+        audio.addEventListener('loadedmetadata', () => {
             durationSpan.textContent = formatTime(audio.duration || 0);
-            updateProgress();
-        }).catch((error) => {
-            // console.error("خطأ في تشغيل الصوت: ", error);
-            durationSpan.textContent = "خطأ"; // إظهار خطأ في حالة فشل التحميل
-        });
-    } else {
-        // console.log("لم يتمكن من الحصول على رابط الصوت.");
-         durationSpan.textContent = "غير متاح";
+            audio.play().then(() => {
+                updateProgress();
+            }).catch(() => {});
+        }, { once: true });
     }
 }
 
@@ -297,72 +139,102 @@ function updateAudioPosition(clientX) {
     const rect = audioProgress.getBoundingClientRect();
     const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
     const progressPercent = offsetX / rect.width;
-    if (audio.duration) { // التأكد من أن المدة موجودة قبل التعيين
-        audio.currentTime = progressPercent * audio.duration;
-        progressBar.style.width = `${progressPercent * 100}%`;
-        progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`;
-        currentTimeSpan.textContent = formatTime(audio.currentTime);
-    }
+    audio.currentTime = progressPercent * audio.duration;
+    progressBar.style.width = `${progressPercent * 100}%`;
+    progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`;
+    currentTimeSpan.textContent = formatTime(audio.currentTime);
 }
 
+// جعل الخط الزمني تفاعليًا (النقر)
 audioProgress.addEventListener('click', (e) => {
-    if (audio.readyState >= 2) { // التأكد من أن بيانات كافية قد تم تحميلها (HAVE_CURRENT_DATA أو أكثر)
+    if (audio.duration) {
         updateAudioPosition(e.clientX);
-        if (audio.paused) audio.play().catch(()=>{}); 
+        if (audio.paused) audio.play();
         updateProgress();
     }
 });
 
+// جعل الدائرة قابلة للسحب
 progressThumb.addEventListener('mousedown', (e) => {
-    if (audio.readyState >= 2) {
-        isDragging = true;
-        audio.pause(); 
-        e.preventDefault(); 
-    }
+    isDragging = true;
+    audio.pause();
+    e.preventDefault();
 });
 
 document.addEventListener('mousemove', (e) => {
-    if (isDragging && audio.readyState >= 2) {
+    if (isDragging && audio.duration) {
         updateAudioPosition(e.clientX);
     }
 });
 
 document.addEventListener('mouseup', () => {
-    if (isDragging && audio.readyState >= 2) {
+    if (isDragging) {
         isDragging = false;
         if (!audio.paused) {
-            audio.play().catch(()=>{}); 
+            audio.play();
             updateProgress();
         }
     }
 });
 
-// دالة لعرض الآية وتحديث الألوان وتشغيل الصوت تلقائيًا
-function displayVerse(verseText, mood) {
-    verseP.textContent = verseText;
-    currentVerseInfo = parseVerseInfo(verseText); // استخراج معلومات الآية وتخزينها
-    
+// دالة لعرض الآية وتحديث الألوان وتشغيل الصوت
+function displayVerse(verseData, mood) {
+    verseP.textContent = verseData.text;
+    currentVerse = verseData.text;
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
 
+    // تحديث الألوان بناءً على زر الحالة
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
+    // إعادة تعيين الشريط قبل تشغيل الصوت
     progressBar.style.width = "0";
     progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
-    durationSpan.textContent = "0:00"; // إعادة تعيين المدة عند عرض آية جديدة
-    
-    audio.pause(); // إيقاف أي صوت سابق
-    audio.currentTime = 0; // إعادة تعيين الوقت
 
-    if (currentVerseInfo) {
-        playCurrentVerseAudio(); // تشغيل الصوت للآية الجديدة
+    // استخراج أرقام السورة والآية باستخدام Regex
+    const match = verseData.text.match(/\((\w+): (\d+)\)/);
+    if (match) {
+        const surahNumber = parseInt(getSurahNumber(match[1])); // تحويل اسم السورة إلى رقم
+        const ayahNumber = parseInt(match[2]);
+        playAudio(surahNumber, ayahNumber);
     }
 }
 
+// دالة لتحويل اسم السورة إلى رقمها (قد تحتاج إلى توسيعها مع قائمة كاملة)
+function getSurahNumber(surahName) {
+    const surahMap = {
+        "الفاتحة": 1, "البقرة": 2, "آل عمران": 3, "النساء": 4, "المائدة": 5,
+        "الأنعام": 6, "الأعراف": 7, "الأنفال": 8, "التوبة": 9, "يونس": 10,
+        "هود": 11, "يوسف": 12, "الرعد": 13, "إبراهيم": 14, "الحجر": 15,
+        "النحل": 16, "الإسراء": 17, "الكهف": 18, "مريم": 19, "طه": 20,
+        "الأنبياء": 21, "الحج": 22, "المؤمنون": 23, "النور": 24, "الفرقان": 25,
+        "الشعراء": 26, "النمل": 27, "القصص": 28, "العنكبوت": 29, "الروم": 30,
+        "لقمان": 31, "السجدة": 32, "الأحزاب": 33, "سبأ": 34, "فاطر": 35,
+        "يس": 36, "الصافات": 37, "ص": 38, "الزمر": 39, "غافر": 40,
+        "فصلت": 41, "الشورى": 42, "الزخرف": 43, "الدخان": 44, "الجاثية": 45,
+        "الأحقاف": 46, "محمد": 47, "الفتح": 48, "الحجرات": 49, "ق": 50,
+        "الذاريات": 51, "الطور": 52, "النجم": 53, "القمر": 54, "الرحمن": 55,
+        "الواقعة": 56, "الحديد": 57, "المجادلة": 58, "الحشر": 59, "الممتحنة": 60,
+        "الصف": 61, "الجمعة": 62, "المنافقون": 63, "التغابن": 64, "الطلاق": 65,
+        "التحريم": 66, "الملك": 67, "القلم": 68, "الحاقة": 69, "المعارج": 70,
+        "نوح": 71, "الجن": 72, "المزمل": 73, "المدثر": 74, "القيامة": 75,
+        "الإنسان": 76, "المرسلات": 77, "النبأ": 78, "النازعات": 79, "عبس": 80,
+        "التكوير": 81, "الإنفطار": 82, "المطففين": 83, "الإنشقاق": 84, "البروج": 85,
+        "الطارق": 86, "الأعلى": 87, "الغاشية": 88, "الفجر": 89, "البلد": 90,
+        "الشمس": 91, "الليل": 92, "الضحى": 93, "الشرح": 94, "التين": 95,
+        "العلق": 96, "القدر": 97, "البينة": 98, "الزلزلة": 99, "العاديات": 100,
+        "القارعة": 101, "التكاثر": 102, "العصر": 103, "الهمزة": 104, "الفيل": 105,
+        "قريش": 106, "الماون": 107, "الكوثر": 108, "الكافرون": 109, "النصر": 110,
+        "المسد": 111, "الإخلاص": 112, "الفلق": 113, "الناس": 114
+    };
+    return surahMap[surahName] || 1; // الافتراضي إذا لم يوجد تطابق
+}
+
+// التعامل مع أزرار الحالة
 moodButtons.forEach(button => {
     button.addEventListener('click', () => {
         const mood = button.getAttribute('data-mood');
@@ -372,21 +244,26 @@ moodButtons.forEach(button => {
     });
 });
 
+// زر الآية العشوائية
 randomVerseBtn.addEventListener('click', () => {
-    const randomVerse = allVerses[Math.floor(Math.random() * allVerses.length)];
-    displayVerse(randomVerse, "random");
+    const randomMood = Object.keys(verses)[Math.floor(Math.random() * Object.keys(verses).length)];
+    const verseList = verses[randomMood];
+    const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
+    displayVerse(randomVerse, randomMood);
 });
 
+// تشغيل الصوت يدويًا
 playAudioBtn.addEventListener('click', () => {
-    if (audio.paused && currentVerseInfo) {
-        playCurrentVerseAudio(); // إذا كان متوقفًا، شغله
-    } else if (!audio.paused) {
-        audio.pause(); // إذا كان يعمل، أوقفه
-    } else if (!currentVerseInfo) {
-        // لا تفعل شيئًا إذا لم تكن هناك آية معروضة
+    audio.pause();
+    const match = currentVerse.match(/\((\w+): (\d+)\)/);
+    if (match) {
+        const surahNumber = parseInt(getSurahNumber(match[1]));
+        const ayahNumber = parseInt(match[2]);
+        playAudio(surahNumber, ayahNumber);
     }
 });
 
+// إيقاف الصوت
 stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
@@ -395,15 +272,15 @@ stopAudioBtn.addEventListener('click', () => {
     currentTimeSpan.textContent = "0:00";
 });
 
+// إعادة الصوت إلى البداية
 rewindAudioBtn.addEventListener('click', () => {
-    if (audio.readyState >= 2) {
-        audio.currentTime = 0;
-        progressBar.style.width = "0";
-        progressThumb.style.left = "-8px";
-        currentTimeSpan.textContent = "0:00";
-    }
+    audio.currentTime = 0;
+    progressBar.style.width = "0";
+    progressThumb.style.left = "-8px";
+    currentTimeSpan.textContent = "0:00";
 });
 
+// كتم/إلغاء كتم الصوت
 volumeControlBtn.addEventListener('click', () => {
     isMuted = !isMuted;
     audio.muted = isMuted;
@@ -411,19 +288,10 @@ volumeControlBtn.addEventListener('click', () => {
     volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
 });
 
-// عند تغيير القارئ، أعد تشغيل الصوت للآية الحالية
-reciterSelect.addEventListener('change', () => {
-    if (currentVerseInfo && !audio.paused) { // إذا كان هناك آية معروضة والصوت يعمل أو متوقف مؤقتًا
-        playCurrentVerseAudio();
-    } else if (currentVerseInfo && audio.paused && audio.currentTime > 0) {
-         playCurrentVerseAudio(); // إذا كان متوقفًا ولكن ليس في البداية
-    }
-});
-
+// مشاركة الآية
 shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
-    const siteUrl = "https://capo2004.github.io/message-from-God/"; // رابط الموقع الفعلي
-    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: ${siteUrl}`;
+    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [https://message-from-god.netlify.app/]`;
     navigator.clipboard.writeText(shareText).then(() => {
         const existingMenu = document.getElementById('social-menu');
         if (existingMenu) existingMenu.remove();
@@ -431,21 +299,22 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}&quote=${encodeURIComponent(verseText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
-                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(verseText)}&url=${encodeURIComponent(siteUrl)}" target="_blank" style="color: #1DA1F2;"><i class="fab fa-twitter"></i> تويتر</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
         resultDiv.insertAdjacentHTML('beforeend', socialOptions);
         setTimeout(() => {
             const menu = document.getElementById('social-menu');
             if (menu) menu.remove();
-        }, 5000); 
+        }, 5000);
         alert('تم نسخ الآية! اختر منصة للمشاركة.');
     }).catch(() => {
         alert('فشل في النسخ، يرجى المحاولة يدويًا.');
     });
 });
 
+// التبديل بين الوضع الفاتح والداكن
 function toggleTheme() {
     document.body.classList.toggle('dark');
     const icon = themeToggleBtn.querySelector('i');
@@ -454,18 +323,3 @@ function toggleTheme() {
 }
 
 themeToggleBtn.addEventListener('click', toggleTheme);
-
-// إضافة مستمع لانتهاء الصوت لإعادة تعيين الشريط
-audio.addEventListener('ended', () => {
-    progressBar.style.width = "0";
-    progressThumb.style.left = "-8px";
-    currentTimeSpan.textContent = "0:00";
-});
-
-// معالجة الأخطاء العامة في تحميل الصوت
-audio.addEventListener('error', (e) => {
-    // console.error("خطأ في عنصر الصوت: ", e);
-    durationSpan.textContent = "خطأ بالتحميل";
-    // يمكنك إضافة رسالة للمستخدم هنا إذا أردت
-});
-
