@@ -43,68 +43,160 @@ const verses = {
     ]
 };
 
-const audioUrls = {
-    "ياسر الدوسري": {
-        "آل عمران: 159": "./audio/al_imran_159.mp3",
-        "النجم: 43": "./audio/an_najm_43.mp3",
-        "الأعراف: 156": "./audio/al_araf_156.mp3",
-        "يونس: 58": "./audio/yunus_58.mp3",
-        "الحجر: 87": "./audio/al_hijr_87.mp3",
-        "الرعد: 28": "./audio/ar_rad_28.mp3",
-        "الشرح: 6": "./audio/ash_sharh_6.mp3",
-        "الطلاق: 2": "./audio/at_talaq_2.mp3",
-        "الشعراء: 217": "./audio/ash_shuara_217.mp3",
-        "التوبة: 51": "./audio/at_tawbah_51.mp3",
-        "الحديد: 4": "./audio/al_hadid_4.mp3",
-        "البقرة: 153": "./audio/al_baqarah_153.mp3",
-        "التوبة: 40": "./audio/at_tawbah_40.mp3",
-        "الطور: 48": "./audio/at_tur_48.mp3",
-        "الزمر: 36": "./audio/az_zumar_36.mp3",
-        "إبراهيم: 7": "./audio/ibrahim_7.mp3",
-        "البقرة: 172": "./audio/al_baqarah_172.mp3",
-        "المائدة: 7": "./audio/al_maidah_7.mp3",
-        "البقرة: 152": "./audio/al_baqarah_152.mp3",
-        "آل عمران: 145": "./audio/al_imran_145.mp3",
-        "آل عمران: 139": "./audio/al_imran_139.mp3",
-        "يوسف: 87": "./audio/yusuf_87.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155.mp3",
-        "آل عمران: 134": "./audio/al_imran_134.mp3",
-        "الشورى: 37": "./audio/ash_shura_37.mp3",
-        "الأعراف: 199": "./audio/al_araf_199.mp3",
-        "فصلت: 34": "./audio/fussilat_34.mp3",
-        "الشورى: 40": "./audio/ash_shura_40.mp3"
-    },
-    "ناصر القطامي": {
-        "آل عمران: 159": "./audio/al_imran_159_qatami.mp3",
-        "النجم: 43": "./audio/an_najm_43_qatami.mp3",
-        "الأعراف: 156": "./audio/al_araf_156_qatami.mp3",
-        "يونس: 58": "./audio/yunus_58_qatami.mp3",
-        "الحجر: 87": "./audio/al_hijr_87_qatami.mp3",
-        "الرعد: 28": "./audio/ar_rad_28_qatami.mp3",
-        "الشرح: 6": "./audio/ash_sharh_6_qatami.mp3",
-        "الطلاق: 2": "./audio/at_talaq_2_qatami.mp3",
-        "الشعراء: 217": "./audio/ash_shuara_217_qatami.mp3",
-        "التوبة: 51": "./audio/at_tawbah_51_qatami.mp3",
-        "الحديد: 4": "./audio/al_hadid_4_qatami.mp3",
-        "البقرة: 153": "./audio/al_baqarah_153_qatami.mp3",
-        "التوبة: 40": "./audio/at_tawbah_40_qatami.mp3",
-        "الطور: 48": "./audio/at_tur_48_qatami.mp3",
-        "الزمر: 36": "./audio/az_zumar_36_qatami.mp3",
-        "إبراهيم: 7": "./audio/ibrahim_7_qatami.mp3",
-        "البقرة: 172": "./audio/al_baqarah_172_qatami.mp3",
-        "المائدة: 7": "./audio/al_maidah_7_qatami.mp3",
-        "البقرة: 152": "./audio/al_baqarah_152_qatami.mp3",
-        "آل عمران: 145": "./audio/al_imran_145_qatami.mp3",
-        "آل عمران: 139": "./audio/al_imran_139_qatami.mp3",
-        "يوسف: 87": "./audio/yusuf_87_qatami.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155_qatami.mp3",
-        "آل عمران: 134": "./audio/al_imran_134_qatami.mp3",
-        "الشورى: 37": "./audio/ash_shura_37_qatami.mp3",
-        "الأعراف: 199": "./audio/al_araf_199_qatami.mp3",
-        "فصلت: 34": "./audio/fussilat_34_qatami.mp3",
-        "الشورى: 40": "./audio/ash_shura_40_qatami.mp3"
-    }
+// --- بداية التعديلات لدمج Everyayah ---
+
+// قاموس لربط أسماء السور بأرقامها (يمكن توسيعه حسب الحاجة)
+const surahNameToNumber = {
+    "الفاتحة": 1,
+    "البقرة": 2,
+    "آل عمران": 3,
+    "النساء": 4,
+    "المائدة": 5,
+    "الأنعام": 6,
+    "الأعراف": 7,
+    "الأنفال": 8,
+    "التوبة": 9,
+    "يونس": 10,
+    "هود": 11,
+    "يوسف": 12,
+    "الرعد": 13,
+    "إبراهيم": 14,
+    "الحجر": 15,
+    "النحل": 16,
+    "الإسراء": 17,
+    "الكهف": 18,
+    "مريم": 19,
+    "طه": 20,
+    "الأنبياء": 21,
+    "الحج": 22,
+    "المؤمنون": 23,
+    "النور": 24,
+    "الفرقان": 25,
+    "الشعراء": 26,
+    "النمل": 27,
+    "القصص": 28,
+    "العنكبوت": 29,
+    "الروم": 30,
+    "لقمان": 31,
+    "السجدة": 32,
+    "الأحزاب": 33,
+    "سبأ": 34,
+    "فاطر": 35,
+    "يس": 36,
+    "الصافات": 37,
+    "ص": 38,
+    "الزمر": 39,
+    "غافر": 40,
+    "فصلت": 41,
+    "الشورى": 42,
+    "الزخرف": 43,
+    "الدخان": 44,
+    "الجاثية": 45,
+    "الأحقاف": 46,
+    "محمد": 47,
+    "الفتح": 48,
+    "الحجرات": 49,
+    "ق": 50,
+    "الذاريات": 51,
+    "الطور": 52,
+    "النجم": 53,
+    "القمر": 54,
+    "الرحمن": 55,
+    "الواقعة": 56,
+    "الحديد": 57,
+    "المجادلة": 58,
+    "الحشر": 59,
+    "الممتحنة": 60,
+    "الصف": 61,
+    "الجمعة": 62,
+    "المنافقون": 63,
+    "التغابن": 64,
+    "الطلاق": 65,
+    "التحريم": 66,
+    "الملك": 67,
+    "القلم": 68,
+    "الحاقة": 69,
+    "المعارج": 70,
+    "نوح": 71,
+    "الجن": 72,
+    "المزمل": 73,
+    "المدثر": 74,
+    "القيامة": 75,
+    "الإنسان": 76,
+    "المرسلات": 77,
+    "النبأ": 78,
+    "النازعات": 79,
+    "عبس": 80,
+    "التكوير": 81,
+    "الإنفطار": 82,
+    "المطففين": 83,
+    "الإنشقاق": 84,
+    "البروج": 85,
+    "الطارق": 86,
+    "الأعلى": 87,
+    "الغاشية": 88,
+    "الفجر": 89,
+    "البلد": 90,
+    "الشمس": 91,
+    "الليل": 92,
+    "الضحى": 93,
+    "الشرح": 94,
+    "التين": 95,
+    "العلق": 96,
+    "القدر": 97,
+    "البينة": 98,
+    "الزلزلة": 99,
+    "العاديات": 100,
+    "القارعة": 101,
+    "التكاثر": 102,
+    "العصر": 103,
+    "الهمزة": 104,
+    "الفيل": 105,
+    "قريش": 106,
+    "الماعون": 107,
+    "الكوثر": 108,
+    "الكافرون": 109,
+    "النصر": 110,
+    "المسد": 111,
+    "الإخلاص": 112,
+    "الفلق": 113,
+    "الناس": 114
 };
+
+// قاموس لربط اسم القارئ المعروض في القائمة المنسدلة باسم المجلد على Everyayah
+const reciterFolderNames = {
+    "ياسر الدوسري": "Yasser_Ad-Dussary_128kbps", // مثال، قد تحتاج لتأكيد اسم المجلد الصحيح
+    "ناصر القطامي": "Nasser_Alqatami_128kbps" // مثال، قد تحتاج لتأكيد اسم المجلد الصحيح
+    // يمكنك إضافة المزيد من القراء هنا
+};
+
+// دالة لتوليد رابط الصوت من Everyayah
+function getEveryayahAudioUrl(reciterFolderName, surahNumber, ayahNumber) {
+    if (!reciterFolderName || !surahNumber || !ayahNumber) {
+        console.error("معلومات غير كافية لتوليد رابط الصوت من Everyayah", reciterFolderName, surahNumber, ayahNumber);
+        return null;
+    }
+    const formattedSurah = String(surahNumber).padStart(3, '0');
+    const formattedAyah = String(ayahNumber).padStart(3, '0');
+    return `https://everyayah.com/data/${reciterFolderName}/${formattedSurah}${formattedAyah}.mp3`;
+}
+
+// دالة لاستخراج اسم السورة ورقم الآية من نص الآية الكامل
+function parseVerseInfo(verseText) {
+    const match = verseText.match(/\(([^:]+):\s*(\d+)\)/);
+    if (match && match[2] && match[3]) {
+        const surahName = match[2].trim();
+        const ayahNumber = parseInt(match[3], 10);
+        const surahNumber = surahNameToNumber[surahName];
+        if (surahNumber) {
+            return { surahName, ayahNumber, surahNumber };
+        }
+    }
+    console.warn("لم يتمكن من استخراج معلومات السورة والآية من: ", verseText);
+    return null;
+}
+
+// --- نهاية التعديلات لدمج Everyayah ---
 
 // جمع كل الآيات في مصفوفة واحدة للاختيار العشوائي
 const allVerses = Object.values(verses).flat();
@@ -138,7 +230,7 @@ const rewindAudioBtn = document.getElementById('rewind-audio');
 const volumeControlBtn = document.getElementById('volume-control');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
-let currentVerse = "";
+let currentVerseInfo = null; // لتخزين معلومات الآية الحالية (بما في ذلك رقم السورة والآية)
 let currentMoodColor = "#6d4c41"; // اللون الافتراضي
 let isMuted = false;
 let isDragging = false;
@@ -150,23 +242,42 @@ function formatTime(seconds) {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// دالة لتشغيل الصوت
-function playAudio(reciter, verseKey) {
-    const audioUrl = audioUrls[reciter][verseKey];
+// دالة لتشغيل الصوت (معدلة لاستخدام Everyayah)
+function playCurrentVerseAudio() {
+    if (!currentVerseInfo || !currentVerseInfo.surahNumber || !currentVerseInfo.ayahNumber) {
+        // console.log("لا توجد معلومات آية حالية لتشغيل الصوت.");
+        return;
+    }
+
+    const selectedReciterName = reciterSelect.value;
+    const reciterFolderName = reciterFolderNames[selectedReciterName];
+
+    if (!reciterFolderName) {
+        // console.error(`لم يتم العثور على اسم مجلد للقارئ: ${selectedReciterName}`);
+        return;
+    }
+
+    const audioUrl = getEveryayahAudioUrl(reciterFolderName, currentVerseInfo.surahNumber, currentVerseInfo.ayahNumber);
+    
     if (audioUrl) {
-        // إعادة تعيين الشريط والزمن قبل التشغيل
         progressBar.style.width = "0";
+        progressThumb.style.left = "-8px";
         currentTimeSpan.textContent = "0:00";
+        durationSpan.textContent = "0:00"; // إعادة تعيين المدة
         audio.src = audioUrl;
-        audio.load(); // إعادة تحميل الملف لضمان البدء من الصفر
+        audio.load(); 
         audio.muted = isMuted;
-        audio.currentTime = 0; // التأكد من بدء الصوت من الصفر
+        // audio.currentTime = 0; // تم إزالتها لأن load() يجب أن تعيد التعيين
         audio.play().then(() => {
             durationSpan.textContent = formatTime(audio.duration || 0);
             updateProgress();
-        }).catch(() => {
-            // لا رسائل خطأ
+        }).catch((error) => {
+            // console.error("خطأ في تشغيل الصوت: ", error);
+            durationSpan.textContent = "خطأ"; // إظهار خطأ في حالة فشل التحميل
         });
+    } else {
+        // console.log("لم يتمكن من الحصول على رابط الصوت.");
+         durationSpan.textContent = "غير متاح";
     }
 }
 
@@ -174,8 +285,8 @@ function playAudio(reciter, verseKey) {
 function updateProgress() {
     if (audio.duration && !audio.paused && !isDragging) {
         const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.style.width = `${progress}%`; // تحديث الشريط بنسبة التقدم
-        progressThumb.style.left = `calc(${progress}% - 8px)`; // تحريك الدائرة مع الشريط
+        progressBar.style.width = `${progress}%`;
+        progressThumb.style.left = `calc(${progress}% - 8px)`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
         requestAnimationFrame(updateProgress);
     }
@@ -186,69 +297,72 @@ function updateAudioPosition(clientX) {
     const rect = audioProgress.getBoundingClientRect();
     const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
     const progressPercent = offsetX / rect.width;
-    audio.currentTime = progressPercent * audio.duration;
-    progressBar.style.width = `${progressPercent * 100}%`;
-    progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`; // تحريك الدائرة بدقة
-    currentTimeSpan.textContent = formatTime(audio.currentTime);
+    if (audio.duration) { // التأكد من أن المدة موجودة قبل التعيين
+        audio.currentTime = progressPercent * audio.duration;
+        progressBar.style.width = `${progressPercent * 100}%`;
+        progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`;
+        currentTimeSpan.textContent = formatTime(audio.currentTime);
+    }
 }
 
-// جعل الخط الزمني تفاعليًا (النقر)
 audioProgress.addEventListener('click', (e) => {
-    if (audio.duration) {
+    if (audio.readyState >= 2) { // التأكد من أن بيانات كافية قد تم تحميلها (HAVE_CURRENT_DATA أو أكثر)
         updateAudioPosition(e.clientX);
-        if (audio.paused) audio.play(); // استئناف التشغيل إذا كان متوقفًا
+        if (audio.paused) audio.play().catch(()=>{}); 
         updateProgress();
     }
 });
 
-// جعل الدائرة قابلة للسحب
 progressThumb.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    audio.pause(); // إيقاف الصوت مؤقتًا أثناء السحب
-    e.preventDefault(); // منع السلوك الافتراضي
+    if (audio.readyState >= 2) {
+        isDragging = true;
+        audio.pause(); 
+        e.preventDefault(); 
+    }
 });
 
 document.addEventListener('mousemove', (e) => {
-    if (isDragging && audio.duration) {
+    if (isDragging && audio.readyState >= 2) {
         updateAudioPosition(e.clientX);
     }
 });
 
 document.addEventListener('mouseup', () => {
-    if (isDragging) {
+    if (isDragging && audio.readyState >= 2) {
         isDragging = false;
         if (!audio.paused) {
-            audio.play(); // استئناف التشغيل بعد السحب
+            audio.play().catch(()=>{}); 
             updateProgress();
         }
     }
 });
 
 // دالة لعرض الآية وتحديث الألوان وتشغيل الصوت تلقائيًا
-function displayVerse(verse, mood) {
-    verseP.textContent = verse;
-    currentVerse = verse;
+function displayVerse(verseText, mood) {
+    verseP.textContent = verseText;
+    currentVerseInfo = parseVerseInfo(verseText); // استخراج معلومات الآية وتخزينها
+    
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
 
-    // تحديث الألوان بناءً على زر الحالة
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
-    // إعادة تعيين الشريط قبل تشغيل الصوت
     progressBar.style.width = "0";
     progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
+    durationSpan.textContent = "0:00"; // إعادة تعيين المدة عند عرض آية جديدة
+    
+    audio.pause(); // إيقاف أي صوت سابق
+    audio.currentTime = 0; // إعادة تعيين الوقت
 
-    // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
-    const reciter = reciterSelect.value;
-    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-    playAudio(reciter, verseKey);
+    if (currentVerseInfo) {
+        playCurrentVerseAudio(); // تشغيل الصوت للآية الجديدة
+    }
 }
 
-// التعامل مع أزرار الحالة
 moodButtons.forEach(button => {
     button.addEventListener('click', () => {
         const mood = button.getAttribute('data-mood');
@@ -258,21 +372,21 @@ moodButtons.forEach(button => {
     });
 });
 
-// زر الآية العشوائية
 randomVerseBtn.addEventListener('click', () => {
     const randomVerse = allVerses[Math.floor(Math.random() * allVerses.length)];
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
 playAudioBtn.addEventListener('click', () => {
-    audio.pause(); // إيقاف الصوت الحالي
-    const reciter = reciterSelect.value;
-    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-    playAudio(reciter, verseKey);
+    if (audio.paused && currentVerseInfo) {
+        playCurrentVerseAudio(); // إذا كان متوقفًا، شغله
+    } else if (!audio.paused) {
+        audio.pause(); // إذا كان يعمل، أوقفه
+    } else if (!currentVerseInfo) {
+        // لا تفعل شيئًا إذا لم تكن هناك آية معروضة
+    }
 });
 
-// إيقاف الصوت
 stopAudioBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
@@ -281,15 +395,15 @@ stopAudioBtn.addEventListener('click', () => {
     currentTimeSpan.textContent = "0:00";
 });
 
-// إعادة الصوت إلى البداية
 rewindAudioBtn.addEventListener('click', () => {
-    audio.currentTime = 0;
-    progressBar.style.width = "0";
-    progressThumb.style.left = "-8px";
-    currentTimeSpan.textContent = "0:00";
+    if (audio.readyState >= 2) {
+        audio.currentTime = 0;
+        progressBar.style.width = "0";
+        progressThumb.style.left = "-8px";
+        currentTimeSpan.textContent = "0:00";
+    }
 });
 
-// كتم/إلغاء كتم الصوت
 volumeControlBtn.addEventListener('click', () => {
     isMuted = !isMuted;
     audio.muted = isMuted;
@@ -297,35 +411,41 @@ volumeControlBtn.addEventListener('click', () => {
     volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
 });
 
-// مشاركة الآية مع قائمة منصات التواصل
+// عند تغيير القارئ، أعد تشغيل الصوت للآية الحالية
+reciterSelect.addEventListener('change', () => {
+    if (currentVerseInfo && !audio.paused) { // إذا كان هناك آية معروضة والصوت يعمل أو متوقف مؤقتًا
+        playCurrentVerseAudio();
+    } else if (currentVerseInfo && audio.paused && audio.currentTime > 0) {
+         playCurrentVerseAudio(); // إذا كان متوقفًا ولكن ليس في البداية
+    }
+});
+
 shareVerseBtn.addEventListener('click', () => {
     const verseText = verseP.textContent;
-    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [https://message-from-god.netlify.app/]`;
+    const siteUrl = "https://capo2004.github.io/message-from-God/"; // رابط الموقع الفعلي
+    const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: ${siteUrl}`;
     navigator.clipboard.writeText(shareText).then(() => {
-        // إزالة أي قائمة سابقة
         const existingMenu = document.getElementById('social-menu');
         if (existingMenu) existingMenu.remove();
 
-        // إظهار قائمة منصات التواصل
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
-                <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(siteUrl)}&quote=${encodeURIComponent(verseText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(verseText)}&url=${encodeURIComponent(siteUrl)}" target="_blank" style="color: #1DA1F2;"><i class="fab fa-twitter"></i> تويتر</a>
             </div>
         `;
         resultDiv.insertAdjacentHTML('beforeend', socialOptions);
         setTimeout(() => {
             const menu = document.getElementById('social-menu');
             if (menu) menu.remove();
-        }, 5000); // إزالة القائمة بعد 5 ثواني
+        }, 5000); 
         alert('تم نسخ الآية! اختر منصة للمشاركة.');
     }).catch(() => {
         alert('فشل في النسخ، يرجى المحاولة يدويًا.');
     });
 });
 
-// التبديل بين الوضع الفاتح والداكن
 function toggleTheme() {
     document.body.classList.toggle('dark');
     const icon = themeToggleBtn.querySelector('i');
@@ -334,3 +454,18 @@ function toggleTheme() {
 }
 
 themeToggleBtn.addEventListener('click', toggleTheme);
+
+// إضافة مستمع لانتهاء الصوت لإعادة تعيين الشريط
+audio.addEventListener('ended', () => {
+    progressBar.style.width = "0";
+    progressThumb.style.left = "-8px";
+    currentTimeSpan.textContent = "0:00";
+});
+
+// معالجة الأخطاء العامة في تحميل الصوت
+audio.addEventListener('error', (e) => {
+    // console.error("خطأ في عنصر الصوت: ", e);
+    durationSpan.textContent = "خطأ بالتحميل";
+    // يمكنك إضافة رسالة للمستخدم هنا إذا أردت
+});
+
