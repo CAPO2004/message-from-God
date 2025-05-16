@@ -99,27 +99,18 @@ function formatTime(seconds) {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
-// دالة لتوليد رابط الصوت من Everyayah
-function getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder = "Alafasy_64kbps") {
-    const formattedSurah = String(surahNumber).padStart(3, '0');
-    const formattedAyah = String(ayahNumber).padStart(3, '0');
-    const baseUrl = `https://everyayah.com/data/${reciterFolder}/${formattedSurah}${formattedAyah}.mp3`;
-    return baseUrl;
-}
-
 // دالة لتشغيل الصوت
-function playAudio(surahNumber, ayahNumber, mood, verseKey) {
+function playAudio(verseKey, mood) {
     let audioUrl;
 
-    // إذا كانت الحالة "الحزن"، نستخدم الروابط المحلية
+    // استخدام الروابط المحلية لخانة "الحزن" فقط
     if (mood === "الحزن" && localAudioUrls[mood] && localAudioUrls[mood][verseKey]) {
         audioUrl = localAudioUrls[mood][verseKey];
         console.log(`Using local URL for ${verseKey}: ${audioUrl}`);
     } else {
-        // استخدام Everyayah للحالات الأخرى
-        const reciterFolder = reciterSelect.value === "ياسر الدوسري" ? "Yasser_Dosari_64kbps" : "Nasser_Alqatami_64kbps";
-        audioUrl = getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder);
-        console.log(`Using Everyayah URL for ${verseKey}: ${audioUrl}`);
+        // للحالات الأخرى، نعطي تنبيه مؤقت لأن الصوت مش متاح
+        alert("الصوت غير متاح حاليًا لخانة " + mood + ". الصوت متاح فقط لخانة 'الحزن'.");
+        return;
     }
 
     if (audioUrl) {
@@ -133,18 +124,18 @@ function playAudio(surahNumber, ayahNumber, mood, verseKey) {
 
         audio.addEventListener('loadedmetadata', () => {
             durationSpan.textContent = formatTime(audio.duration || 0);
-            audio.play().then(() => {
-                updateProgress();
-            }).catch((error) => {
+            audio.play().catch((error) => {
                 console.error(`Error playing audio: ${error}`);
-                alert("تعذر تشغيل الصوت. لو كنت بتستخدم خانة غير 'الحزن'، الصوت مش متاح لأن الرابط الخارجي مش شغال. لو عايز تضيف الآية دي محليًا، أضف ملف الصوت في مجلد audio.");
+                alert("تعذر تشغيل الصوت. تأكد إن ملف الصوت موجود في مجلد audio.");
             });
         }, { once: true });
 
         audio.addEventListener('error', (e) => {
             console.error(`Audio error for ${audioUrl}:`, e);
-            alert("فشل في تحميل الصوت. لو كنت بتستخدم خانة غير 'الحزن'، الصوت مش متاح حاليًا.");
+            alert("فشل في تحميل الصوت. تحقق من مسار الملف في مجلد audio.");
         }, { once: true });
+
+        updateProgress();
     }
 }
 
@@ -202,7 +193,7 @@ document.addEventListener('mouseup', () => {
     }
 });
 
-// دالة لعرض الآية وتشغيل الصوت تلقائيًا
+// دالة لعرض الآية وتشغيل الصوت
 function displayVerse(verseData, mood) {
     verseP.textContent = verseData.text;
     currentVerse = verseData.text;
@@ -219,7 +210,7 @@ function displayVerse(verseData, mood) {
     currentTimeSpan.textContent = "0:00";
 
     const verseKey = `${verseData.text.match(/\((\w+): (\d+)\)/)[1]}: ${verseData.text.match(/\((\w+): (\d+)\)/)[2]}`;
-    playAudio(verseData.surah, verseData.ayah, mood, verseKey);
+    playAudio(verseKey, mood); // تشغيل الصوت بناءً على الخانة
 }
 
 // التعامل مع أزرار الحالة
@@ -243,11 +234,9 @@ playAudioBtn.addEventListener('click', () => {
     audio.pause();
     const match = currentVerse.match(/\((\w+): (\d+)\)/);
     if (match) {
-        const surahNumber = parseInt(getSurahNumber(match[1]));
-        const ayahNumber = parseInt(match[2]);
         const verseKey = `${match[1]}: ${match[2]}`;
-        const mood = Array.from(moodButtons).find(btn => btn.getAttribute('data-mood') === verseP.textContent.match(/\((.*?)\)/)?.[1])?.getAttribute('data-mood') || "random";
-        playAudio(surahNumber, ayahNumber, mood, verseKey);
+        const mood = Array.from(moodButtons).find(btn => btn.getAttribute('data-mood') === currentVerse.match(/\((.*?)\)/)?.[1])?.getAttribute('data-mood') || "random";
+        playAudio(verseKey, mood);
     }
 });
 
@@ -287,7 +276,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
@@ -312,7 +301,7 @@ function toggleTheme() {
 
 themeToggleBtn.addEventListener('click', toggleTheme);
 
-// دالة لتحويل اسم السورة إلى رقمها
+// دالة لتحويل اسم السورة إلى رقمها (غير مستخدمة دلوقتي)
 function getSurahNumber(surahName) {
     const surahMap = {
         "الفاتحة": 1, "البقرة": 2, "آل عمران": 3, "النساء": 4, "المائدة": 5,
