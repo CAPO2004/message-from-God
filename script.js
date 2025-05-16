@@ -1,11 +1,24 @@
 // تعريف المتغير لاسم مجلد القارئ (قابل للتعديل)
-const DEFAULT_RECITER_FOLDER = "Alafasy_64kbps"; // مشاري راشد العفاسي كقيمة افتراضية
+const DEFAULT_RECITER_FOLDER = "Alafasy_64kbps";
+
+// قاموس الروابط المحلية لخانة الحزن (كحل مؤقت)
+const localAudioUrls = {
+    "الحزن": {
+        "التوبة: 40": "./audio/at_tawbah_40.mp3",
+        "آل عمران: 139": "./audio/al_imran_139.mp3",
+        "يوسف: 87": "./audio/yusuf_87.mp3",
+        "الأعراف: 156": "./audio/al_araf_156.mp3",
+        "البقرة: 155": "./audio/al_baqarah_155.mp3"
+    }
+};
 
 // دالة لتوليد رابط الصوت من Everyayah
 function getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder = DEFAULT_RECITER_FOLDER) {
     const formattedSurah = String(surahNumber).padStart(3, '0');
     const formattedAyah = String(ayahNumber).padStart(3, '0');
-    return `https://everyayah.com/data/${reciterFolder}/${formattedSurah}${formattedAyah}.mp3`;
+    const url = `https://everyayah.com/data/${reciterFolder}/${formattedSurah}${formattedAyah}.mp3`;
+    console.log(`Generated URL: ${url}`); // تسجيل الرابط للتحقق
+    return url;
 }
 
 // قائمة الآيات مع أرقام السور والآيات
@@ -65,7 +78,7 @@ const moodColors = {
     "الشكر": "#f9a825",
     "الحزن": "#5e35b1",
     "الغضب": "#d32f2f",
-    "random": "#4caf50" // لون زر الرسالة العشوائية
+    "random": "#4caf50"
 };
 
 const moodButtons = document.querySelectorAll('.mood-btn');
@@ -87,7 +100,7 @@ const volumeControlBtn = document.getElementById('volume-control');
 const themeToggleBtn = document.querySelector('.theme-toggle');
 let audio = new Audio();
 let currentVerse = "";
-let currentMoodColor = "#6d4c41"; // اللون الافتراضي
+let currentMoodColor = "#6d4c41";
 let isMuted = false;
 let isDragging = false;
 
@@ -99,9 +112,19 @@ function formatTime(seconds) {
 }
 
 // دالة لتشغيل الصوت
-function playAudio(surahNumber, ayahNumber) {
-    const reciterFolder = reciterSelect.value === "ياسر الدوسري" ? "Yasser_Dosari_64kbps" : "Nasser_Alqatami_64kbps";
-    const audioUrl = getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder);
+function playAudio(surahNumber, ayahNumber, mood, verseKey) {
+    let audioUrl;
+
+    // إذا كانت الحالة "الحزن"، نستخدم الروابط المحلية
+    if (mood === "الحزن" && localAudioUrls[mood] && localAudioUrls[mood][verseKey]) {
+        audioUrl = localAudioUrls[mood][verseKey];
+        console.log(`Using local URL for ${verseKey}: ${audioUrl}`);
+    } else {
+        // استخدام Everyayah للحالات الأخرى
+        const reciterFolder = reciterSelect.value === "ياسر الدوسري" ? "Yasser_Dosari_64kbps" : "Nasser_Alqatami_64kbps";
+        audioUrl = getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder);
+    }
+
     if (audioUrl) {
         audio.pause();
         progressBar.style.width = "0";
@@ -118,7 +141,16 @@ function playAudio(surahNumber, ayahNumber) {
             durationSpan.textContent = formatTime(audio.duration || 0);
             audio.play().then(() => {
                 updateProgress();
-            }).catch(() => {});
+            }).catch((error) => {
+                console.error(`Error playing audio: ${error}`);
+                alert("تعذر تشغيل الصوت، قد تكون هناك مشكلة في الرابط أو الاتصال.");
+            });
+        }, { once: true });
+
+        // إضافة معالجة خطأ إضافية
+        audio.addEventListener('error', (e) => {
+            console.error(`Audio error for ${audioUrl}:`, e);
+            alert("فشل في تحميل الصوت. جرب تغيير القارئ أو تحقق من الاتصال.");
         }, { once: true });
     }
 }
@@ -172,7 +204,7 @@ document.addEventListener('mouseup', () => {
         isDragging = false;
         if (!audio.paused) {
             audio.play();
-            updateProgress();
+ parl            updateProgress();
         }
     }
 });
@@ -184,27 +216,25 @@ function displayVerse(verseData, mood) {
     resultDiv.classList.remove('hidden');
     resultDiv.style.opacity = 1;
 
-    // تحديث الألوان بناءً على زر الحالة
     currentMoodColor = moodColors[mood] || "#4caf50";
     playAudioBtn.style.backgroundColor = currentMoodColor;
     reciterLabel.style.color = currentMoodColor;
     verseP.style.borderLeftColor = currentMoodColor;
 
-    // إعادة تعيين الشريط قبل تشغيل الصوت
     progressBar.style.width = "0";
     progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
 
-    // استخراج أرقام السورة والآية باستخدام Regex
     const match = verseData.text.match(/\((\w+): (\d+)\)/);
     if (match) {
-        const surahNumber = parseInt(getSurahNumber(match[1])); // تحويل اسم السورة إلى رقم
+        const surahNumber = parseInt(getSurahNumber(match[1]));
         const ayahNumber = parseInt(match[2]);
-        playAudio(surahNumber, ayahNumber);
+        const verseKey = `${match[1]}: ${match[2]}`;
+        playAudio(surahNumber, ayahNumber, mood, verseKey);
     }
 }
 
-// دالة لتحويل اسم السورة إلى رقمها (قد تحتاج إلى توسيعها مع قائمة كاملة)
+// دالة لتحويل اسم السورة إلى رقمها
 function getSurahNumber(surahName) {
     const surahMap = {
         "الفاتحة": 1, "البقرة": 2, "آل عمران": 3, "النساء": 4, "المائدة": 5,
@@ -231,7 +261,7 @@ function getSurahNumber(surahName) {
         "قريش": 106, "الماون": 107, "الكوثر": 108, "الكافرون": 109, "النصر": 110,
         "المسد": 111, "الإخلاص": 112, "الفلق": 113, "الناس": 114
     };
-    return surahMap[surahName] || 1; // الافتراضي إذا لم يوجد تطابق
+    return surahMap[surahName] || 1;
 }
 
 // التعامل مع أزرار الحالة
@@ -259,7 +289,8 @@ playAudioBtn.addEventListener('click', () => {
     if (match) {
         const surahNumber = parseInt(getSurahNumber(match[1]));
         const ayahNumber = parseInt(match[2]);
-        playAudio(surahNumber, ayahNumber);
+        const verseKey = `${match[1]}: ${match[2]}`;
+        playAudio(surahNumber, ayahNumber, moodButtons.forEach(btn => btn.getAttribute('data-mood') === verseP.textContent.match(/\((.*?)\)/)[1] ? btn.getAttribute('data-mood') : null), verseKey);
     }
 });
 
@@ -299,7 +330,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
