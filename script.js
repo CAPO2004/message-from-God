@@ -1,4 +1,3 @@
-// تعريف البيانات
 const verses = {
     "السعادة": [
         { text: "فَبِمَا رَحْمَةٍ مِنَ اللَّهِ لِنتَ لَهُمْ وَلَوْ كُنتَ فَظًّا غَلِيظَ الْقَلْبِ لَانْفَضُّوا مِنْ حَوْلِكَ فَاعْفُ عَنْهُمْ وَاسْتَغْفِرْ لَهُمْ وَشَاوِرْهُمْ فِي الْأَمْرِ فَإِذَا عَزَمْتَ فَتَوَكَّلْ عَلَى اللَّهِ إِنَّ اللَّهَ يُحِبُّ الْمُتَوَكِّلِينَ (آل عمران: 159)", surah: 3, ayah: 159 },
@@ -44,6 +43,24 @@ const verses = {
     ]
 };
 
+// الروابط المحلية لخانة الحزن فقط
+const localAudioUrls = {
+    "ياسر الدوسري": {
+        "التوبة: 40": "./audio/at_tawbah_40.mp3",
+        "آل عمران: 139": "./audio/al_imran_139.mp3",
+        "يوسف: 87": "./audio/yusuf_87.mp3",
+        "الأعراف: 156": "./audio/al_araf_156.mp3",
+        "البقرة: 155": "./audio/al_baqarah_155.mp3"
+    },
+    "ناصر القطامي": {
+        "التوبة: 40": "./audio/at_tawbah_40_qatami.mp3",
+        "آل عمران: 139": "./audio/al_imran_139_qatami.mp3",
+        "يوسف: 87": "./audio/yusuf_87_qatami.mp3",
+        "الأعراف: 156": "./audio/al_araf_156_qatami.mp3",
+        "البقرة: 155": "./audio/al_baqarah_155_qatami.mp3"
+    }
+};
+
 // جمع كل الآيات في مصفوفة واحدة للاختيار العشوائي
 const allVerses = Object.values(verses).flat();
 
@@ -58,17 +75,6 @@ const moodColors = {
     "random": "#4caf50"
 };
 
-// الروابط المحلية لخانة الحزن
-const localAudioUrls = {
-    "الحزن": {
-        "التوبة: 40": "./audio/at_tawbah_40.mp3",
-        "آل عمران: 139": "./audio/al_imran_139.mp3",
-        "يوسف: 87": "./audio/yusuf_87.mp3",
-        "الأعراف: 156": "./audio/al_araf_156.mp3",
-        "البقرة: 155": "./audio/al_baqarah_155.mp3"
-    }
-};
-
 const moodButtons = document.querySelectorAll('.mood-btn');
 const randomVerseBtn = document.getElementById('random-verse-btn');
 const resultDiv = document.getElementById('result');
@@ -80,7 +86,7 @@ const shareVerseBtn = document.getElementById('share-verse');
 const reciterLabel = document.querySelector('#result h3');
 const audioProgress = document.getElementById('audio-progress');
 const progressBar = document.getElementById('progress-bar');
-const progressThumb = document.getElementById('progress-thumb');
+const progressThumb = document.getElementSystem: * Today's date and time is 04:16 PM EEST on Friday, May 16, 2025. *Id('progress-thumb');
 const currentTimeSpan = document.getElementById('current-time');
 const durationSpan = document.getElementById('duration');
 const rewindAudioBtn = document.getElementById('rewind-audio');
@@ -99,48 +105,50 @@ function formatTime(seconds) {
     return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
+// دالة لتوليد رابط الصوت من Everyayah
+function getEveryayahAudioUrl(surahNumber, ayahNumber, reciterFolder) {
+    const formattedSurah = String(surahNumber).padStart(3, '0');
+    const formattedAyah = String(ayahNumber).padStart(3, '0');
+    return `https://everyayah.com/data/${reciterFolder}/${formattedSurah}${formattedAyah}.mp3`;
+}
+
 // دالة لتشغيل الصوت
-function playAudio(verseKey, mood) {
+function playAudio(reciter, verseKey, mood, surah, ayah) {
     let audioUrl;
 
-    // استخدام الروابط المحلية لخانة "الحزن" فقط
-    if (mood === "الحزن" && localAudioUrls[mood] && localAudioUrls[mood][verseKey]) {
-        audioUrl = localAudioUrls[mood][verseKey];
-        console.log(`Attempting to play local audio: ${audioUrl}`);
+    // إذا كانت الحالة "الحزن"، نستخدم الروابط المحلية
+    if (mood === "الحزن" && localAudioUrls[reciter] && localAudioUrls[reciter][verseKey]) {
+        audioUrl = localAudioUrls[reciter][verseKey];
+        console.log(`Using local URL for ${verseKey}: ${audioUrl}`);
     } else {
-        alert("الصوت غير متاح حاليًا لخانة " + mood + ". الصوت متاح فقط لخانة 'الحزن'.");
-        return;
+        // استخدام Everyayah للحالات الأخرى
+        const reciterFolder = reciter === "ياسر الدوسري" ? "Yasser_Dosari_64kbps" : "AbdulSamad_64kbps_QuranExplorer.Com";
+        audioUrl = getEveryayahAudioUrl(surah, ayah, reciterFolder);
+        console.log(`Using Everyayah URL for ${verseKey}: ${audioUrl}`);
     }
 
     if (audioUrl) {
-        // إعادة تهيئة شريط التقدم
         progressBar.style.width = "0";
         progressThumb.style.left = "-8px";
         currentTimeSpan.textContent = "0:00";
-
-        // تحميل الصوت
         audio.src = audioUrl;
         audio.load();
         audio.muted = isMuted;
         audio.currentTime = 0;
 
-        // التحقق من تحميل الملف
         audio.addEventListener('loadedmetadata', () => {
             durationSpan.textContent = formatTime(audio.duration || 0);
-            console.log(`Audio duration: ${audio.duration}`);
             audio.play().then(() => {
-                console.log("Audio is playing successfully.");
                 updateProgress();
             }).catch((error) => {
                 console.error(`Error playing audio: ${error}`);
-                alert("تعذر تشغيل الصوت. تأكد إن ملف الصوت موجود في مجلد audio وإن المتصفح يسمح بتشغيل الصوت.");
+                alert("تعذر تشغيل الصوت. قد تكون هناك مشكلة في الرابط أو إعدادات المتصفح.");
             });
         }, { once: true });
 
-        // التحقق من أخطاء التحميل
         audio.addEventListener('error', (e) => {
             console.error(`Audio error for ${audioUrl}:`, e);
-            alert("فشل في تحميل الصوت. تحقق من وجود الملف في مجلد audio أو إذا كان هناك مشكلة في المتصفح.");
+            alert("فشل في تحميل الصوت. تحقق من الرابط أو إعدادات المتصفح.");
         }, { once: true });
     }
 }
@@ -199,7 +207,7 @@ document.addEventListener('mouseup', () => {
     }
 });
 
-// دالة لعرض الآية وتشغيل الصوت
+// دالة لعرض الآية وتشغيل الصوت تلقائيًا
 function displayVerse(verseData, mood) {
     verseP.textContent = verseData.text;
     currentVerse = verseData.text;
@@ -215,8 +223,9 @@ function displayVerse(verseData, mood) {
     progressThumb.style.left = "-8px";
     currentTimeSpan.textContent = "0:00";
 
-    const verseKey = `${verseData.text.match(/\((\w+): (\d+)\)/)[1]}: ${verseData.text.match(/\((\w+): (\d+)\)/)[2]}`;
-    playAudio(verseKey, mood);
+    const reciter = reciterSelect.value;
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+    playAudio(reciter, verseKey, mood, verseData.surah, verseData.ayah);
 }
 
 // التعامل مع أزرار الحالة
@@ -235,15 +244,14 @@ randomVerseBtn.addEventListener('click', () => {
     displayVerse(randomVerse, "random");
 });
 
-// تشغيل الصوت يدويًا (اختياري)
+// تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
 playAudioBtn.addEventListener('click', () => {
     audio.pause();
-    const match = currentVerse.match(/\((\w+): (\d+)\)/);
-    if (match) {
-        const verseKey = `${match[1]}: ${match[2]}`;
-        const mood = Array.from(moodButtons).find(btn => btn.getAttribute('data-mood') === currentVerse.match(/\((.*?)\)/)?.[1])?.getAttribute('data-mood') || "random";
-        playAudio(verseKey, mood);
-    }
+    const reciter = reciterSelect.value;
+    const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
+    const verseData = allVerses.find(v => v.text === currentVerse);
+    const mood = Object.keys(verses).find(key => verses[key].some(v => v.text === currentVerse)) || "random";
+    playAudio(reciter, verseKey, mood, verseData.surah, verseData.ayah);
 });
 
 // إيقاف الصوت
@@ -282,7 +290,7 @@ shareVerseBtn.addEventListener('click', () => {
         const socialOptions = `
             <div id="social-menu">
                 <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
                 <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
             </div>
         `;
