@@ -114,7 +114,7 @@ const customAudioLinks = {
         "الأعراف: 156": "",
         "يونس: 58": "",
         "الحجر: 87": "",
-        "الرعد: 28": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/013028.mp3",
+        "الرعد: 28": "https://everyayah.com/data/Yaser_Salamah_128kbps/013028.mp3",
         "الشرح: 6": "",
         "الطلاق: 2": "",
         "الشعراء: 217": "",
@@ -218,6 +218,7 @@ function formatTime(seconds) {
 function playAudio(reciter, verseKey) {
     const customUrl = customAudioLinks[reciter][verseKey];
     const audioUrl = customUrl && customUrl !== "" ? customUrl : audioUrls[reciter][verseKey];
+    console.log(`Attempting to play audio from: ${audioUrl}`); // للتأكد من اللينك
     if (audioUrl) {
         // إعادة تعيين الشريط والزمن قبل التشغيل
         progressBar.style.width = "0";
@@ -229,9 +230,16 @@ function playAudio(reciter, verseKey) {
         audio.play().then(() => {
             durationSpan.textContent = formatTime(audio.duration || 0);
             updateProgress();
-        }).catch(() => {
-            // لا رسائل خطأ
+        }).catch((error) => {
+            console.error(`Error playing audio: ${error}`);
+            alert("تعذر تشغيل الصوت. قد تكون هناك مشكلة في الرابط أو إعدادات CORS أو قيود المتصفح. تحقق من وحدة التحكم (Console) لمزيد من التفاصيل.");
         });
+
+        // إضافة مستمع للخطأ في تحميل الصوت
+        audio.addEventListener('error', (e) => {
+            console.error(`Audio error for ${audioUrl}:`, e);
+            alert("فشل في تحميل الصوت. من المحتمل أن تكون المشكلة بسبب إعدادات CORS. جرب رفع الملف على نفس الموقع بتاعك.");
+        }, { once: true });
     }
 }
 
