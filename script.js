@@ -114,7 +114,7 @@ const customAudioLinks = {
         "الأعراف: 156": "",
         "يونس: 58": "",
         "الحجر: 87": "",
-        "الرعد: 28": "https://everyayah.com/data/Yaser_Salamah_128kbps/013028.mp3",
+        "الرعد: 28": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/013028.mp3",
         "الشرح: 6": "",
         "الطلاق: 2": "",
         "الشعراء: 217": "",
