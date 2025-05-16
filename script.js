@@ -218,7 +218,6 @@ function formatTime(seconds) {
 function playAudio(reciter, verseKey) {
     const customUrl = customAudioLinks[reciter][verseKey];
     const audioUrl = customUrl && customUrl !== "" ? customUrl : audioUrls[reciter][verseKey];
-    console.log(`Attempting to play audio from: ${audioUrl}`); // للتأكد من اللينك
     if (audioUrl) {
         // إعادة تعيين الشريط والزمن قبل التشغيل
         progressBar.style.width = "0";
@@ -230,16 +229,9 @@ function playAudio(reciter, verseKey) {
         audio.play().then(() => {
             durationSpan.textContent = formatTime(audio.duration || 0);
             updateProgress();
-        }).catch((error) => {
-            console.error(`Error playing audio: ${error}`);
-            alert("تعذر تشغيل الصوت. قد تكون هناك مشكلة في الرابط أو إعدادات CORS أو قيود المتصفح. تحقق من وحدة التحكم (Console) لمزيد من التفاصيل.");
+        }).catch(() => {
+            // لا رسائل خطأ
         });
-
-        // إضافة مستمع للخطأ في تحميل الصوت
-        audio.addEventListener('error', (e) => {
-            console.error(`Audio error for ${audioUrl}:`, e);
-            alert("فشل في تحميل الصوت. من المحتمل أن تكون المشكلة بسبب إعدادات CORS. جرب رفع الملف على نفس الموقع بتاعك.");
-        }, { once: true });
     }
 }
 
