@@ -128,7 +128,7 @@ const customAudioLinks = {
         "النحل: 114": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/016114.mp3",
         "المائدة: 11": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/005011.mp3",
         "البقرة: 152": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/002152.mp3",
-        "آل عمران: 145": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/003145.mp3",
+        "آل عمران: 145": "",
         "آل عمران: 139": "",
         "يوسف: 87": "",
         "البقرة: 155": "",
