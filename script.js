@@ -8,7 +8,7 @@ const verses = {
     ],
     "القلق": [
         "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ (الرعد: 28)",
-        "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا (الشرح: 6)",
+        "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا إِنَّ مَعَ الْعُسْرِ يُسْرًا (الشرح: 5,6)",
         "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا (الطلاق: 2)",
         "وَتَوَكَّلْ عَلَى الْعَزِيزِ الرَّحِيمِ (الشعراء: 217)",
         "قُلْ لَن يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ (التوبة: 51)"
@@ -145,7 +145,7 @@ const customAudioLinks = {
         "يونس: 58": "https://everyayah.com/data/Nasser_Alqatami_128kbps/010058.mp3",
         "الحجر: 87": "https://everyayah.com/data/Nasser_Alqatami_128kbps/015087.mp3",
         "الرعد: 28": "https://everyayah.com/data/Nasser_Alqatami_128kbps/013028.mp3",
-        "الشرح: 6": "https://everyayah.com/data/Nasser_Alqatami_128kbps/094006.mp3",
+        "الشرح: 5,6": "https://everyayah.com/data/Nasser_Alqatami_128kbps/094005.mp3 , https://everyayah.com/data/Nasser_Alqatami_128kbps/094006.mp3",
         "الطلاق: 2": "",
         "الشعراء: 217": "https://everyayah.com/data/Nasser_Alqatami_128kbps/026217.mp3",
         "التوبة: 51": "https://everyayah.com/data/Nasser_Alqatami_128kbps/009051.mp3",
