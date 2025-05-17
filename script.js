@@ -274,8 +274,11 @@ const customAudioLinks = {
     }
 };
 
+console.log("بدء تنفيذ الكود...");
+
 // جمع كل الآيات في مصفوفة واحدة للاختيار العشوائي
 const allVerses = Object.values(verses).flat();
+console.log("تم تحميل الآيات:", allVerses.length);
 
 // تعريف الألوان بناءً على الحالة
 const moodColors = {
@@ -290,6 +293,8 @@ const moodColors = {
 
 // انتظر تحميل الصفحة بالكامل قبل الوصول للعناصر
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("الصفحة تم تحميلها بالكامل");
+
     const moodButtons = document.querySelectorAll('.mood-btn');
     const randomVerseBtn = document.getElementById('random-verse-btn');
     const resultDiv = document.getElementById('result');
@@ -318,16 +323,19 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("خطأ: العنصر 'resultDiv' أو 'verseP' غير موجود في الـ HTML. تأكد من وجود <div id='result'> و <p id='verse'>");
         return;
     }
+    console.log("العناصر الأساسية تم العثور عليها:", { resultDiv, verseP });
 
     if (!moodButtons.length) {
         console.error("خطأ: لا توجد أزرار للحالة (mood buttons). تأكد من وجود عناصر بكلاس 'mood-btn' في الـ HTML");
         return;
     }
+    console.log("تم العثور على", moodButtons.length, "أزرار حالة");
 
     if (!randomVerseBtn) {
         console.error("خطأ: زر الآية العشوائية غير موجود. تأكد من وجود <button id='random-verse-btn'>");
         return;
     }
+    console.log("زر الآية العشوائية تم العثور عليه");
 
     // دالة تحويل الثواني إلى تنسيق زمني (mm:ss)
     function formatTime(seconds) {
@@ -338,22 +346,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // دالة لتشغيل الصوت
     function playAudio(reciter, verseKey) {
+        console.log("محاولة تشغيل الصوت لـ", reciter, verseKey);
         const customUrl = customAudioLinks[reciter][verseKey];
         const audioUrl = customUrl && customUrl !== "" ? customUrl : audioUrls[reciter][verseKey];
         if (audioUrl) {
-            // إعادة تعيين الشريط والزمن قبل التشغيل
             progressBar.style.width = "0";
             currentTimeSpan.textContent = "0:00";
             audio.src = audioUrl;
-            audio.load(); // إعادة تحميل الملف لضمان البدء من الصفر
+            audio.load();
             audio.muted = isMuted;
-            audio.currentTime = 0; // التأكد من بدء الصوت من الصفر
+            audio.currentTime = 0;
             audio.play().then(() => {
+                console.log("تم تشغيل الصوت بنجاح");
                 durationSpan.textContent = formatTime(audio.duration || 0);
                 updateProgress();
-            }).catch(() => {
-                // لا رسائل خطأ
+            }).catch((error) => {
+                console.error("خطأ في تشغيل الصوت:", error);
             });
+        } else {
+            console.error("خطأ: لا يوجد رابط صوتي للآية:", verseKey);
         }
     }
 
@@ -361,8 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateProgress() {
         if (audio.duration && !audio.paused && !isDragging) {
             const progress = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = `${progress}%`; // تحديث الشريط بنسبة التقدم
-            progressThumb.style.left = `calc(${progress}% - 8px)`; // تحريك الدائرة مع الشريط
+            progressBar.style.width = `${progress}%`;
+            progressThumb.style.left = `calc(${progress}% - 8px)`;
             currentTimeSpan.textContent = formatTime(audio.currentTime);
             requestAnimationFrame(updateProgress);
         }
@@ -375,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const progressPercent = offsetX / rect.width;
         audio.currentTime = progressPercent * audio.duration;
         progressBar.style.width = `${progressPercent * 100}%`;
-        progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`; // تحريك الدائرة بدقة
+        progressThumb.style.left = `calc(${progressPercent * 100}% - 8px)`;
         currentTimeSpan.textContent = formatTime(audio.currentTime);
     }
 
@@ -383,7 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     audioProgress.addEventListener('click', (e) => {
         if (audio.duration) {
             updateAudioPosition(e.clientX);
-            if (audio.paused) audio.play(); // استئناف التشغيل إذا كان متوقفًا
+            if (audio.paused) audio.play();
             updateProgress();
         }
     });
@@ -391,8 +402,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // جعل الدائرة قابلة للسحب
     progressThumb.addEventListener('mousedown', (e) => {
         isDragging = true;
-        audio.pause(); // إيقاف الصوت مؤقتًا أثناء السحب
-        e.preventDefault(); // منع السلوك الافتراضي
+        audio.pause();
+        e.preventDefault();
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -405,7 +416,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isDragging) {
             isDragging = false;
             if (!audio.paused) {
-                audio.play(); // استئناف التشغيل بعد السحب
+                audio.play();
                 updateProgress();
             }
         }
@@ -413,50 +424,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // دالة لعرض الآية وتحديث الألوان وتشغيل الصوت تلقائيًا
     function displayVerse(verse, mood) {
+        console.log("محاولة عرض الآية:", verse, mood);
+        if (!verseP || !resultDiv) {
+            console.error("خطأ: العنصر 'verseP' أو 'resultDiv' غير موجود أثناء عرض الآية");
+            return;
+        }
         verseP.textContent = verse;
         currentVerse = verse;
         resultDiv.classList.remove('hidden');
         resultDiv.style.opacity = 1;
 
-        // تحديث الألوان بناءً على زر الحالة
         currentMoodColor = moodColors[mood] || "#4caf50";
         playAudioBtn.style.backgroundColor = currentMoodColor;
         reciterLabel.style.color = currentMoodColor;
         verseP.style.borderLeftColor = currentMoodColor;
 
-        // إعادة تعيين الشريط قبل تشغيل الصوت
         progressBar.style.width = "0";
         progressThumb.style.left = "-8px";
         currentTimeSpan.textContent = "0:00";
 
-        // تشغيل الصوت تلقائيًا بناءً على القارئ الافتراضي
-        const reciter = reciterSelect.value;
-        const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-        playAudio(reciter, verseKey);
+        const reciter = reciterSelect ? reciterSelect.value : "ياسر الدوسري";
+        const verseKey = currentVerse.match(/\(.*?\)/)?.[0]?.replace(/[()]/g, "") || "";
+        if (verseKey) {
+            playAudio(reciter, verseKey);
+        } else {
+            console.error("خطأ: لا يمكن استخراج مفتاح الآية من النص:", verse);
+        }
     }
 
     // التعامل مع أزرار الحالة
     moodButtons.forEach(button => {
         button.addEventListener('click', () => {
+            console.log("تم الضغط على زر:", button.getAttribute('data-mood'));
             const mood = button.getAttribute('data-mood');
             const verseList = verses[mood];
-            const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
-            displayVerse(randomVerse, mood);
+            if (verseList && verseList.length > 0) {
+                const randomVerse = verseList[Math.floor(Math.random() * verseList.length)];
+                displayVerse(randomVerse, mood);
+            } else {
+                console.error("خطأ: قائمة الآيات فارغة أو غير موجودة للحالة:", mood);
+            }
         });
     });
 
     // زر الآية العشوائية
     randomVerseBtn.addEventListener('click', () => {
-        const randomVerse = allVerses[Math.floor(Math.random() * allVerses.length)];
-        displayVerse(randomVerse, "random");
+        console.log("تم الضغط على زر الآية العشوائية");
+        if (allVerses.length > 0) {
+            const randomVerse = allVerses[Math.floor(Math.random() * allVerses.length)];
+            displayVerse(randomVerse, "random");
+        } else {
+            console.error("خطأ: قائمة الآيات العامة فارغة");
+        }
     });
 
-    // تشغيل الصوت يدويًا (مع تغيير القارئ فورًا)
+    // تشغيل الصوت يدويًا
     playAudioBtn.addEventListener('click', () => {
-        audio.pause(); // إيقاف الصوت الحالي
-        const reciter = reciterSelect.value;
-        const verseKey = currentVerse.match(/\(.*?\)/)[0].replace(/[()]/g, "");
-        playAudio(reciter, verseKey);
+        audio.pause();
+        const reciter = reciterSelect ? reciterSelect.value : "ياسر الدوسري";
+        const verseKey = currentVerse.match(/\(.*?\)/)?.[0]?.replace(/[()]/g, "") || "";
+        if (verseKey) {
+            playAudio(reciter, verseKey);
+        } else {
+            console.error("خطأ: لا يوجد نص آية حالي لتشغيل الصوت");
+        }
     });
 
     // إيقاف الصوت
@@ -484,32 +515,32 @@ document.addEventListener('DOMContentLoaded', () => {
         volumeControlBtn.querySelector('i').classList.toggle('fa-volume-mute');
     });
 
-    // مشاركة الآية مع قائمة منصات التواصل
+    // مشاركة الآية
     shareVerseBtn.addEventListener('click', () => {
-        const verseText = verseP.textContent;
+        const verseText = verseP ? verseP.textContent : "";
         const shareText = `${verseText}\n\nرسالة من الله - تفضل بزيارة الموقع: [https://message-from-god.netlify.app/]`;
-        navigator.clipboard.writeText(shareText).then(() => {
-            // إزالة أي قائمة سابقة
-            const existingMenu = document.getElementById('social-menu');
-            if (existingMenu) existingMenu.remove();
+        if (verseText) {
+            navigator.clipboard.writeText(shareText).then(() => {
+                const existingMenu = document.getElementById('social-menu');
+                if (existingMenu) existingMenu.remove();
 
-            // إظهار قائمة منصات التواصل
-            const socialOptions = `
-                <div id="social-menu">
-                    <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=[https://message-from-god.netlify.app/]"e=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
-                    <a href="https://www.instagram.com/?url=[https://message-from-god.netlify.app/]&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
-                </div>
-            `;
-            resultDiv.insertAdjacentHTML('beforeend', socialOptions);
-            setTimeout(() => {
-                const menu = document.getElementById('social-menu');
-                if (menu) menu.remove();
-            }, 5000); // إزالة القائمة بعد 5 ثواني
-            alert('تم نسخ الآية! اختر منصة للمشاركة.');
-        }).catch(() => {
-            alert('فشل في النسخ، يرجى المحاولة يدويًا.');
-        });
+                const socialOptions = `
+                    <div id="social-menu">
+                        <a href="https://wa.me/?text=${encodeURIComponent(shareText)}" target="_blank" style="color: #25D366;"><i class="fab fa-whatsapp"></i> واتساب</a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://message-from-god.netlify.app/&quote=${encodeURIComponent(shareText)}" target="_blank" style="color: #3b5998;"><i class="fab fa-facebook"></i> فيسبوك</a>
+                        <a href="https://www.instagram.com/?url=https://message-from-god.netlify.app/&text=${encodeURIComponent(shareText)}" target="_blank" style="color: #E1306C;"><i class="fab fa-instagram"></i> إنستغرام</a>
+                    </div>
+                `;
+                resultDiv.insertAdjacentHTML('beforeend', socialOptions);
+                setTimeout(() => {
+                    const menu = document.getElementById('social-menu');
+                    if (menu) menu.remove();
+                }, 5000);
+                alert('تم نسخ الآية! اختر منصة للمشاركة.');
+            }).catch(() => {
+                alert('فشل في النسخ، يرجى المحاولة يدويًا.');
+            });
+        }
     });
 
     // التبديل بين الوضع الفاتح والداكن
