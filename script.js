@@ -219,6 +219,7 @@ const customAudioLinks = {
         "الشرح: 6": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/094006.mp3",
         "البقرة: 83": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/002083.mp3",
         "الإسراء: 53": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/017053.mp3"
+        "البقرة: 172": "https://everyayah.com/data/Yasser_Ad-Dussary_128kbps/002172.mp3",
     },
     "ناصر القطامي": {
         "آل عمران: 159": "https://everyayah.com/data/Nasser_Alqatami_128kbps/003159.mp3",
@@ -269,6 +270,7 @@ const customAudioLinks = {
         "الشرح: 6": "https://everyayah.com/data/Nasser_Alqatami_128kbps/094006.mp3",
         "البقرة: 83": "https://everyayah.com/data/Nasser_Alqatami_128kbps/002083.mp3",
         "الإسراء: 53": "https://everyayah.com/data/Nasser_Alqatami_128kbps/017053.mp3"
+        "البقرة: 172": "https://everyayah.com/data/Nasser_Alqatami_128kbps/002172.mp3",
     }
 };
 
